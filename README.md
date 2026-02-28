@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="assets/logo.jpeg" width="300" alt="BINARYBINDERS Logo">
+</p>
+
+# ECO (Efficient Compressed Operations)
+
 # ECO
 ECO: A private, P2P file-sharing utility using bit-level compression for lightning-fast, serverless data exchange.
 
