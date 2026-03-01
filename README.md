@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="assets/logo.jpeg" width="300" alt="BINARYBINDERS Logo">
+  <img src="src/assets/logo.jpeg" width="350" alt="8INARYBINDERS Logo">
 </p>
+
 
 # ECO (Efficient Compressed Operations)
 
