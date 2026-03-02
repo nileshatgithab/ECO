@@ -1,0 +1,49 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DESIGN TOKENS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+  --teal: #2dd4bf;
+  --teal-deep: #0f9385;
+  --teal-dark: #0a6b62;
+  --teal-soft: #e8faf8;
+  --teal-mid: #c8f5ee;
+  --teal-glow: rgba(45, 212, 191, 0.2);
+  --teal-glow-strong: rgba(45, 212, 191, 0.35);
+
+  --warm-white: #f9f8f5;
+  --cream: #f2efe9;
+  --cream-deep: #eae6de;
+  --ink: #18181b;
+  --ink-soft: #3f3f46;
+  --ink-dim: #a1a1aa;
+
+  --green: #22c55e;
+  --green-soft: #dcfce7;
+  --amber: #f59e0b;
+
+  --glass-bg: rgba(255, 255, 255, 0.68);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  --border: rgba(0, 0, 0, 0.07);
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.09);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.11);
+  --shadow-teal: 0 8px 28px rgba(15, 147, 133, 0.3);
+
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 26px;
+  --r-xl: 32px;
+  --r-2xl: 40px;
+
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  --step-dur: 0.55s;
+}
