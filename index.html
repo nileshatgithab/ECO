@@ -148,3 +148,197 @@
           <button class="copy-btn" id="copy-btn" onclick="copyCode()">Copy</button>
         </div>
 
+
+         <!-- Visual connection bridge (shown when connecting) -->
+        <div class="bridge" id="bridge">
+          <div class="bridge-row">
+            <div class="bridge-node lit" id="bn-you">
+              <div class="bridge-icon"><span>💻</span></div>
+              <div class="bridge-lbl">You</div>
+            </div>
+            <div class="bridge-track">
+              <svg viewBox="0 0 240 30" preserveAspectRatio="none">
+                <line class="bt-bg" x1="0" y1="15" x2="240" y2="15"/>
+                <line class="bt-line" id="bt-line" x1="0" y1="15" x2="240" y2="15"/>
+                <circle class="bt-particle" id="bt-p1" cx="0" cy="15" r="4.5"/>
+                <circle class="bt-particle" id="bt-p2" cx="0" cy="15" r="3"/>
+                <circle class="bt-particle" id="bt-p3" cx="0" cy="15" r="2"/>
+              </svg>
+              <div class="bridge-caption" id="bridge-caption">Establishing link…</div>
+            </div>
+            <div class="bridge-node" id="bn-friend">
+              <div class="bridge-icon"><span id="bn-friend-icon">👤</span></div>
+              <div class="bridge-lbl">Friend</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="or-sep" id="or-sep">then enter theirs</div>
+
+        <!-- Friend's code input -->
+        <div class="field-wrap">
+          <label class="field-label" for="peer-input">
+            Your friend's share code
+            <div class="tip-wrap">
+              <span class="tip-q">?</span>
+              <div class="tip-box">Ask your friend to open ECO and share their code. It looks like TIDE-5581.</div>
+            </div>
+          </label>
+          <input class="field" id="peer-input" type="text" placeholder="e.g. TIDE-5581"
+                 style="font-family:'Fraunces',serif; font-size:18px; letter-spacing:2.5px; text-transform:uppercase"
+                 oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9\-]/g,'').substring(0,9)"
+                 onkeydown="if(event.key==='Enter') doConnect()"/>
+          <div class="field-hint">Your friend can find this at the top of their ECO screen.</div>
+        </div>
+
+        <button class="btn btn-primary btn-full" id="connect-btn" onclick="doConnect()">
+          Connect with friend →
+        </button>
+
+      </div>
+
+      <!-- Privacy footer -->
+      <div class="privacy-bar">
+        <span>🔒</span>
+        <span>Direct connection — file never touches a server</span>
+        <div class="tip-wrap" style="margin-left:auto">
+          <span class="tip-q">?</span>
+          <div class="tip-box">ECO builds a direct encrypted pipe between your two devices. No cloud. No logs. Nothing stored.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ STEP 3 — SEND (hidden until connected) ══ -->
+  <section class="section reveal" id="sec-send" style="display:none">
+    <div class="section-label">Ready to send</div>
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Pre-send checklist -->
+        <div id="send-idle">
+          <div class="feat-row" style="padding-top:0">
+            <div class="feat-icon" style="background:var(--green-soft)">✅</div>
+            <div>
+              <div class="feat-title">File shrunk &amp; ready</div>
+              <div class="feat-desc" id="send-file-desc">—</div>
+            </div>
+          </div>
+          <div class="feat-row">
+            <div class="feat-icon" style="background:var(--teal-soft)">🔗</div>
+            <div>
+              <div class="feat-title">Direct connection live</div>
+              <div class="feat-desc" id="send-peer-desc">—</div>
+            </div>
+          </div>
+          <div class="feat-row">
+            <div class="feat-icon" style="background:#FEF9C3">🔒</div>
+            <div>
+              <div class="feat-title">End-to-end encrypted</div>
+              <div class="feat-desc">Only you two can see this file</div>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-full btn-lg" id="send-btn" style="margin-top:18px" onclick="doSend(this)">
+            Send this file →
+          </button>
+        </div>
+
+        <!-- Active transfer -->
+        <div id="send-active" style="display:none">
+          <div class="prog-header">
+            <div class="prog-label">Sending your file…</div>
+            <div class="prog-pct" id="prog-pct">0%</div>
+          </div>
+          <div class="prog-track">
+            <div class="prog-fill" id="prog-bar" style="width:0%"></div>
+          </div>
+          <div class="prog-sub" id="prog-sub">Encrypting…</div>
+
+          <!-- Speedometer -->
+          <div class="speedo">
+            <div>
+              <div class="speedo-val" id="speedo-val">0 MB/s</div>
+              <div class="speedo-lbl">Transfer speed</div>
+              <div class="speedo-sub" id="speedo-sub">Starting…</div>
+            </div>
+            <div style="flex:1">
+              <div class="speedo-bar-track">
+                <div class="speedo-bar-fill" id="speedo-bar" style="width:0%"></div>
+              </div>
+              <div class="peak-row">
+                <span>0</span>
+                <span>Peak: <span id="peak-spd">0</span> MB/s</span>
+                <span>10+</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-glass btn-full btn-sm" style="margin-top:13px" onclick="doAbort()">
+            Stop sending
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SUCCESS STATE ══ -->
+  <div class="success" id="sec-success">
+    <span class="success-emoji">🎉</span>
+    <h2 class="success-title">Delivered!</h2>
+    <p class="success-sub" id="success-sub">Your file arrived safely.</p>
+    <div class="success-badge">🔒 Never touched a server · Wiped from memory</div>
+    <div>
+      <button class="btn btn-primary" onclick="doReset()" style="margin-right:8px; margin-bottom:8px">Send another →</button>
+      <button class="btn btn-glass" onclick="doReset()">Done</button>
+    </div>
+  </div>
+
+  <!-- ══ HOW IT WORKS ══ -->
+  <section class="section" id="sec-how" style="margin-top:8px; animation:fade-up 0.6s 0.3s var(--ease) both">
+    <div class="section-label">How ECO works</div>
+    <div class="card">
+      <div class="how-body">
+        <div class="feat-row" style="padding-top:0">
+          <div class="feat-icon" style="background:var(--teal-soft)">🗜</div>
+          <div>
+            <div class="feat-title">Shrinks your file automatically</div>
+            <div class="feat-desc">Compresses before sending — especially fast for docs, code, and text.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon" style="background:var(--green-soft)">🔒</div>
+          <div>
+            <div class="feat-title">No server — ever</div>
+            <div class="feat-desc">Your file goes device-to-device. No cloud. No company sees it.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon" style="background:#FEF9C3">⚡</div>
+          <div>
+            <div class="feat-title">Gone when you're done</div>
+            <div class="feat-desc">Transfer finishes → cleared from memory on both ends instantly.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /.app -->
+
+<!-- Toast notification -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="toast-icon" id="toast-icon">✅</span>
+  <div>
+    <div style="font-weight:600; font-size:14px" id="toast-title">—</div>
+    <div style="font-size:12px; color:var(--ink-dim)" id="toast-sub"></div>
+  </div>
+</div>
+
+<!-- Hidden file input -->
+<input type="file" id="file-input" onchange="onFileSelect(event)" style="display:none" aria-hidden="true"/>
+
+<script src="script.js"></script>
+</body>
+</html>
