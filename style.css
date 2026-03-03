@@ -2,48 +2,97 @@
    DESIGN TOKENS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 :root {
-  --teal: #2dd4bf;
-  --teal-deep: #0f9385;
-  --teal-dark: #0a6b62;
-  --teal-soft: #e8faf8;
-  --teal-mid: #c8f5ee;
-  --teal-glow: rgba(45, 212, 191, 0.2);
+  --teal:             #2DD4BF;
+  --teal-deep:        #0F9385;
+  --teal-dark:        #0a6b62;
+  --teal-soft:        #E8FAF8;
+  --teal-mid:         #C8F5EE;
+  --teal-glow:        rgba(45, 212, 191, 0.20);
   --teal-glow-strong: rgba(45, 212, 191, 0.35);
 
-  --warm-white: #f9f8f5;
-  --cream: #f2efe9;
-  --cream-deep: #eae6de;
-  --ink: #18181b;
-  --ink-soft: #3f3f46;
-  --ink-dim: #a1a1aa;
+  --warm-white:  #F9F8F5;
+  --cream:       #F2EFE9;
+  --cream-deep:  #EAE6DE;
+  --ink:         #18181B;
+  --ink-soft:    #3F3F46;
+  --ink-dim:     #A1A1AA;
 
-  --green: #22c55e;
-  --green-soft: #dcfce7;
-  --amber: #f59e0b;
+  --green:       #22C55E;
+  --green-soft:  #DCFCE7;
+  --amber:       #F59E0B;
 
-  --glass-bg: rgba(255, 255, 255, 0.68);
-  --glass-border: rgba(255, 255, 255, 0.85);
-  --glass-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --glass-bg:      rgba(255, 255, 255, 0.68);
+  --glass-border:  rgba(255, 255, 255, 0.85);
+  --glass-shadow:  0 4px 24px rgba(0, 0, 0, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 
-  --border: rgba(0, 0, 0, 0.07);
-  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.09);
-  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.11);
-  --shadow-teal: 0 8px 28px rgba(15, 147, 133, 0.3);
+  --border:      rgba(0, 0, 0, 0.07);
+  --shadow-xs:   0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-sm:   0 2px 10px rgba(0, 0, 0, 0.06);
+  --shadow-md:   0 8px 30px rgba(0, 0, 0, 0.09);
+  --shadow-lg:   0 20px 60px rgba(0, 0, 0, 0.11);
+  --shadow-teal: 0 8px 28px rgba(15, 147, 133, 0.30);
 
-  --r-xs: 8px;
-  --r-sm: 12px;
-  --r-md: 18px;
-  --r-lg: 26px;
-  --r-xl: 32px;
+  --r-xs:  8px;
+  --r-sm:  12px;
+  --r-md:  18px;
+  --r-lg:  26px;
+  --r-xl:  32px;
   --r-2xl: 40px;
 
-  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease: cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease:     cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:  cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
 
   --step-dur: 0.55s;
 }
+
+/* ── Dark Mode ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --warm-white:  #0C1210;
+    --cream:       #131A17;
+    --cream-deep:  #1A2420;
+    --ink:         #ECFDF8;
+    --ink-soft:    #A7D8CC;
+    --ink-dim:     #4D7A70;
+    --border:      rgba(255, 255, 255, 0.07);
+    --glass-bg:    rgba(15, 26, 22, 0.80);
+    --glass-border:rgba(255, 255, 255, 0.09);
+    --glass-shadow:0 4px 24px rgba(0, 0, 0, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    --teal-soft:   rgba(45, 212, 191, 0.09);
+    --teal-mid:    rgba(45, 212, 191, 0.16);
+    --green-soft:  rgba(34, 197, 94, 0.12);
+    --shadow-sm:   0 2px 10px rgba(0, 0, 0, 0.35);
+    --shadow-md:   0 8px 30px rgba(0, 0, 0, 0.45);
+    --shadow-lg:   0 20px 60px rgba(0, 0, 0, 0.55);
+    --shadow-teal: 0 8px 28px rgba(15, 147, 133, 0.22);
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESET
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--warm-white);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input  { font-family: inherit; }
