@@ -146,3 +146,67 @@ input  { font-family: inherit; }
   .blob-b { background: radial-gradient(circle, #1A242018 0%, transparent 70%); }
   .blob-c { background: radial-gradient(circle, #0F93850E 0%, transparent 70%); }
 }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LAYOUT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.app {
+  position: relative;
+  z-index: 1;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 18px 100px;
+  min-height: 100vh;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HEADER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.header {
+  padding: 22px 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: fade-up 0.5s var(--ease) both;
+}
+
+.logo { display: flex; align-items: center; gap: 11px; }
+
+.logo-mark {
+  width: 38px; height: 38px;
+  background: linear-gradient(145deg, var(--teal) 0%, var(--teal-deep) 100%);
+  border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 18px;
+  box-shadow: var(--shadow-teal);
+  position: relative; overflow: hidden;
+  flex-shrink: 0;
+}
+.logo-mark::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.30) 0%, transparent 55%);
+  border-radius: inherit;
+}
+
+.logo-text   { line-height: 1.2; }
+.logo-name   { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 700; color: var(--ink); letter-spacing: -0.3px; }
+.logo-sub    { font-size: 11px; color: var(--ink-dim); letter-spacing: 0.3px; }
+
+/* ── Connection badge ── */
+.conn-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 14px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  box-shadow: var(--shadow-sm);
+  font-size: 13px; font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.conn-badge:hover  { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.conn-badge:active { transform: scale(0.96); }
