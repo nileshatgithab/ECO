@@ -686,3 +686,74 @@ input  { font-family: inherit; }
   margin-bottom: 26px; box-shadow: var(--shadow-sm);
 }
 @media (prefers-color-scheme: dark) { .success-badge { color: #4ade80; } }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOAST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(88px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border); border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  padding: 13px 18px;
+  display: flex; align-items: center; gap: 11px;
+  font-size: 14px; color: var(--ink);
+  z-index: 500; white-space: nowrap;
+  transition: transform 0.4s var(--spring);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast-icon { font-size: 20px; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   HOW IT WORKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.how-body { padding: 18px 22px; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   COACH MARK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.coach {
+  display: none;
+  background: var(--ink); color: #fff;
+  border-radius: var(--r-md); padding: 13px 17px;
+  font-size: 13px; line-height: 1.6;
+  position: relative; margin-top: 11px;
+  animation: spring-in 0.4s var(--spring) both;
+}
+.coach.on { display: block; }
+.coach::before {
+  content: ''; position: absolute;
+  bottom: 100%; left: 26px;
+  border: 7px solid transparent; border-bottom-color: var(--ink);
+}
+.coach-x { float: right; color: rgba(255, 255, 255, 0.4); font-size: 16px; margin-left: 8px; line-height: 1; transition: color 0.15s; }
+.coach-x:hover { color: rgba(255, 255, 255, 0.9); }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CONFETTI CANVAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#fx { position: fixed; inset: 0; pointer-events: none; z-index: 9999; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   KEYFRAMES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes fade-up     { from { opacity: 0; transform: translateY(16px); }  to { opacity: 1; transform: translateY(0); } }
+@keyframes fade-in     { from { opacity: 0; }  to { opacity: 1; } }
+@keyframes reveal-in   { from { opacity: 0; transform: translateY(22px) scale(0.97); }  to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes spring-in   { from { opacity: 0; transform: scale(0.91) translateY(14px); }  to { opacity: 1; transform: scale(1) translateY(0); } }
+@keyframes float       { 0%, 100% { transform: translateY(0); }  50% { transform: translateY(-8px); } }
+@keyframes blur-up     { from { filter: blur(14px); opacity: 0; transform: scale(1.08); }  to { filter: blur(0); opacity: 1; transform: scale(1); } }
+@keyframes shimmer     { 0% { background-position: -200% 0; }  100% { background-position: 200% 0; } }
+@keyframes ripple-green{ 0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }  70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); } }
+@keyframes scale-pulse { 0%, 100% { transform: scale(1); }  50% { transform: scale(1.4); } }
+@keyframes count-in    { from { opacity: 0; transform: translateY(10px); }  to { opacity: 1; transform: translateY(0); } }
+@keyframes btn-spring  { 0% { transform: scale(0.93); }  60% { transform: scale(1.05); }  80% { transform: scale(0.98); }  100% { transform: scale(1); } }
+@keyframes pop-in      { 0% { transform: scale(0) rotate(-10deg); }  60% { transform: scale(1.14) rotate(4deg); }  80% { transform: scale(0.94) rotate(-2deg); }  100% { transform: scale(1) rotate(0); } }
+@keyframes shake       { 0%, 100% { transform: translateX(0); }  20% { transform: translateX(-6px); }  40% { transform: translateX(6px); }  60% { transform: translateX(-4px); }  80% { transform: translateX(4px); } }
+@keyframes tick-flash  { 0% { color: var(--ink); }  50% { color: var(--teal); }  100% { color: var(--teal-deep); } }
+@keyframes drift-a     { from { transform: translate(0, 0) scale(1); }  to { transform: translate(70px, 55px) scale(1.12); } }
+@keyframes drift-b     { from { transform: translate(0, 0) scale(1); }  to { transform: translate(-55px, 65px) scale(0.9); } }
+@keyframes drift-c     { from { transform: translate(0, 0) scale(1); }  to { transform: translate(30px, -50px) scale(1.08); } }
+@keyframes drift-d     { from { transform: translate(0, 0) scale(1); }  to { transform: translate(-40px, 35px) scale(1.15); } }
