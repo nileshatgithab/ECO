@@ -568,3 +568,121 @@ input  { font-family: inherit; }
   border-top: 1px solid rgba(34, 197, 94, 0.14);
   font-size: 12px; color: #15803d; font-weight: 500;
 }
+
+@media (prefers-color-scheme: dark) { .privacy-bar { color: #4ade80; background: rgba(34, 197, 94, 0.07); } }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SEND CARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.feat-row  { display: flex; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+.feat-row:last-of-type { border-bottom: none; }
+.feat-icon  { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+.feat-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.feat-desc  { font-size: 13px; color: var(--ink-dim); line-height: 1.5; }
+
+/* ── Progress bar ── */
+.prog-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 11px; }
+.prog-label  { font-size: 15px; font-weight: 500; color: var(--ink); }
+.prog-pct    { font-family: 'Fraunces', serif; font-size: 24px; font-weight: 700; color: var(--teal-deep); letter-spacing: -0.5px; }
+
+.prog-track { height: 10px; background: var(--cream); border-radius: 100px; overflow: hidden; border: 1px solid var(--border); }
+.prog-fill  {
+  height: 100%; border-radius: 100px;
+  background: linear-gradient(90deg, var(--teal), var(--teal-deep), var(--teal));
+  background-size: 200% 100%;
+  box-shadow: 0 2px 10px rgba(45, 212, 191, 0.5);
+  transition: width 0.22s var(--ease);
+  animation: shimmer 2s linear infinite;
+}
+.prog-sub { font-size: 13px; color: var(--ink-dim); margin-top: 8px; }
+
+/* ── Speedometer ── */
+.speedo {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px;
+  background: var(--cream); border-radius: var(--r-md);
+  border: 1px solid var(--border); margin-top: 12px;
+}
+@media (prefers-color-scheme: dark) { .speedo { background: rgba(255, 255, 255, 0.04); } }
+.speedo-val { font-family: 'Fraunces', serif; font-size: 26px; font-weight: 700; color: var(--teal-deep); letter-spacing: -0.5px; min-width: 94px; }
+.speedo-val.tick { animation: tick-flash 0.25s var(--ease); }
+.speedo-lbl { font-size: 12px; color: var(--ink-dim); margin-top: 1px; }
+.speedo-sub { font-size: 11px; color: var(--ink-dim); margin-top: 2px; }
+.speedo-bar-track { flex: 1; height: 6px; background: var(--border); border-radius: 100px; overflow: hidden; }
+.speedo-bar-fill  { height: 100%; background: linear-gradient(90deg, var(--teal-soft), var(--teal-deep)); border-radius: 100px; transition: width 0.35s var(--ease); }
+.peak-row { display: flex; justify-content: space-between; margin-top: 4px; font-size: 10.5px; color: var(--ink-dim); }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BUTTONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 26px; border-radius: 100px;
+  font-size: 15px; font-weight: 500;
+  cursor: pointer; border: none;
+  transition: all 0.2s var(--ease);
+  position: relative; overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.btn::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.28) 0%, transparent 55%);
+  opacity: 0; transition: opacity 0.15s; border-radius: inherit;
+}
+.btn:active::after { opacity: 1; }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--teal) 0%, var(--teal-deep) 100%);
+  color: #fff; font-weight: 600;
+  box-shadow: var(--shadow-teal);
+}
+.btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(15, 147, 133, 0.40); }
+.btn-primary:active { transform: scale(0.94); box-shadow: 0 3px 12px rgba(15, 147, 133, 0.28); transition: transform 0.06s, box-shadow 0.08s; }
+.btn-primary.spring { animation: btn-spring 0.5s var(--spring); }
+
+.btn-glass {
+  background: var(--glass-bg); backdrop-filter: blur(10px);
+  color: var(--ink-soft); border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+.btn-glass:hover  { background: var(--cream); transform: translateY(-1px); }
+.btn-glass:active { transform: scale(0.95); }
+
+.btn-full { width: 100%; }
+.btn-lg   { padding: 15px 34px; font-size: 16px; }
+.btn-sm   { padding: 9px 17px; font-size: 13px; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SUCCESS STATE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.success {
+  display: none; text-align: center;
+  padding: 56px 30px;
+  background: linear-gradient(160deg, var(--green-soft) 0%, var(--warm-white) 65%);
+  border: 1px solid #BBF7D0; border-radius: var(--r-2xl);
+  animation: spring-in 0.55s var(--spring) both;
+  position: relative; overflow: hidden;
+}
+@media (prefers-color-scheme: dark) {
+  .success { background: linear-gradient(160deg, rgba(34, 197, 94, 0.11) 0%, var(--warm-white) 65%); border-color: rgba(34, 197, 94, 0.22); }
+}
+.success::before {
+  content: ''; position: absolute;
+  top: -70px; left: 50%; transform: translateX(-50%);
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.10) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.success-emoji { font-size: 60px; display: block; margin-bottom: 18px; animation: pop-in 0.7s var(--spring) both; }
+.success-title { font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700; color: var(--ink); margin-bottom: 10px; letter-spacing: -0.5px; }
+.success-sub   { font-size: 15px; color: var(--ink-soft); margin-bottom: 22px; line-height: 1.6; max-width: 290px; margin-left: auto; margin-right: auto; }
+.success-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--glass-bg); backdrop-filter: blur(8px);
+  border: 1px solid #BBF7D0; border-radius: 100px;
+  padding: 9px 17px; font-size: 13px; color: #15803d; font-weight: 500;
+  margin-bottom: 26px; box-shadow: var(--shadow-sm);
+}
+@media (prefers-color-scheme: dark) { .success-badge { color: #4ade80; } }
