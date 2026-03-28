@@ -1,88 +1,154 @@
-# ECO Signaling Server Documentation
+<div align="center">
+
+# 🛰️ ECO Signaling Server
+
+_The temporary handshake broker — steps away the moment peers connect._
+
+[![Node.js](https://img.shields.io/badge/Runtime-Node.js-green)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Framework-Express-black)](https://expressjs.com/)
+[![Socket.io](https://img.shields.io/badge/Transport-Socket.io-white)](https://socket.io/)
+
+</div>
+
+---
 
 ## What is the Signaling Server?
 
-The signaling server is a temporary middleman that helps
-two peers find each other. Once the P2P connection is
-established, the server steps away completely and never
-sees the file.
+WebRTC peers can't find each other on their own — they need a temporary broker to exchange connection details. That's all the ECO signaling server does.
+
+It relays three message types between peers, then **steps away completely**. It never sees, stores, or touches your file data.
 
 ---
 
 ## Tech Stack
 
-- Node.js
-- Express
-- Socket.io
+| Technology    | Role                                |
+| ------------- | ----------------------------------- |
+| **Node.js**   | Runtime environment                 |
+| **Express**   | HTTP server & static file serving   |
+| **Socket.io** | Real-time bidirectional event relay |
 
 ---
 
-## How to Run
+## Getting Started
 
-- Open your terminal and then run this command
-- node server.js
+### Prerequisites
 
-Server runs on → _http://localhost:3000_
+- Node.js `v18+`
+- Dependencies installed via `npm install`
+
+### Run the Server
+
+```bash
+# Using npm
+npm start
+
+# Or directly with Node
+node src/server/server.js
+```
+
+Server starts at → `http://localhost:3000`
 
 ---
 
-## The 3 Parts
+## Architecture: The 3 Parts
 
-### 1. Relay (Forwarder)
+### 1. 🔀 Relay (Forwarder)
 
-- Forwards offer, answer and ICE candidates between peers.
-- Server never reads the data — just passes it through.
+Forwards WebRTC negotiation messages between the two peers:
 
-### 2. Trigger
+- `offer` — Peer A's connection proposal
+- `answer` — Peer B's response
+- `ice-candidate` — Network path candidates for NAT traversal
 
-- Fires a "ready" event when exactly 2 peers connect.
-- This starts the WebRTC handshake automatically.
+The server **never reads** the content of these messages — it just passes them through like a postman who can't open letters.
 
-### 3. Cleanup
+### 2. ⚡ Trigger
+
+When exactly **2 peers** join the same session, the server fires a `ready` event automatically. This kicks off the WebRTC handshake without any manual action from the user.
+
+```
+peers.length === 2  →  emit("ready")  →  handshake begins
+```
+
+### 3. 🧹 Cleanup
 
 When a peer disconnects:
 
-- Removes them from peers[] array
-- Notifies the other peer they left
+- Removes them from the `peers[]` array
+- Notifies the remaining peer that the session has ended
 
 ---
 
 ## Connection Flow
 
-1. Peer A opens ECO → added to peers[]
-2. Peer B opens ECO → added to peers[]
-3. peers.length === 2 → "ready" fires
-4. Peer A creates offer → server relays to Peer B
-5. Peer B creates answer → server relays to Peer A
-6. ICE (Interactive Connectivity Establishment) candidates exchange through server
-7. P2P connection established
-8. Server steps away completely
+```
+Peer A                  Signaling Server               Peer B
+  │                           │                           │
+  │── connects ──────────────▶│ peers[] = [A]             │
+  │                           │                           │
+  │                           │◀────────── connects ──────│
+  │                           │ peers[] = [A, B]          │
+  │                           │                           │
+  │◀──────────── "ready" ─────│──────────── "ready" ──────▶│
+  │                           │                           │
+  │── offer (SDP) ───────────▶│──────────── offer ────────▶│
+  │                           │                           │
+  │◀─────────── answer ───────│◀─────── answer (SDP) ─────│
+  │                           │                           │
+  │◀──── ICE candidates ──────│────── ICE candidates ─────▶│
+  │                           │                           │
+  │◀══════════ Direct P2P connection established ══════════▶│
+  │                           │                           │
+  │                    [Server exits]                      │
+  │                           │                           │
+  │◀══════════════ File streams directly ══════════════════▶│
+```
 
 ---
 
 ## Why Zero Knowledge?
 
-The server only relays 3 message types:
+The server only ever relays these three message types:
 
-- offer (SDP)
-- answer (SDP)
-- ice-candidate
+| Message         | What it contains                         |
+| --------------- | ---------------------------------------- |
+| `offer`         | SDP — connection metadata, not file data |
+| `answer`        | SDP — peer's response to the offer       |
+| `ice-candidate` | Network path info for NAT traversal      |
 
-Software-Defined Perimeter (SDP) is a framework that hides network infrastructure to prevent unauthorized access. It acts as a "black cloud" that only allows authenticated users to see specific resources.
+**SDP (Session Description Protocol)** is a standard format describing connection parameters — codec info, network addresses, encryption keys. It contains zero file content.
 
-It never sees, stores or logs your file.
-The file goes directly device to device.
-
----
-
-## Files
-
-| File              | Purpose                          |
-| ----------------- | -------------------------------- |
-| server.js         | Signaling server                 |
-| package.json      | Dependencies list                |
-| package-lock.json | Exact locked dependency versions |
+Once the P2P tunnel is open, all file data flows **directly device-to-device**, bypassing the server entirely. The server has no way to intercept or log your transfer.
 
 ---
 
-_Built by Piyush Kumar for ECO — FOSS Hackathon 2026_
+## File Reference
+
+| File                   | Purpose                                              |
+| ---------------------- | ---------------------------------------------------- |
+| `src/server/server.js` | Signaling server — the only backend ECO runs         |
+| `package.json`         | Project dependencies                                 |
+| `package-lock.json`    | Locked dependency versions for reproducible installs |
+| `SIGNALING.md`         | This document                                        |
+
+---
+
+## Deployment Note
+
+When deploying, make sure the server reads its port from the environment:
+
+```js
+const PORT = process.env.PORT || 3000;
+server.listen(PORT);
+```
+
+This is required for platforms like **Render**, **Railway**, or **Fly.io** which assign ports dynamically.
+
+---
+
+<div align="center">
+
+_Built by **Piyush Kumar** for ECO — BINARYBINDERS · FOSS Hackathon 2026_
+
+</div>

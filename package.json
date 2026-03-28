@@ -1,13 +1,17 @@
 {
-  "name": "network",
+  "name": "eco-network",
   "version": "1.0.0",
-  "description": "",
+  "description": "ECO - Private File Sharing FOSS Project",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "keywords": [],
+  "keywords": [
+    "webrtc",
+    "p2p",
+    "file-sharing"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
