@@ -7,21 +7,10 @@
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <title>ECO — Private File Sharing</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
       rel="stylesheet"
     />
-    <style>
-  /* Ensure font-display:swap behaviour even for Google Fonts */
-  @font-face {
-    font-family: 'YourFontName';
-    src: url('path/to/your-font.woff2') format('woff2'),
-         url('path/to/your-font.woff') format('woff');
-    font-display: swap;
-  }
-</style>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -83,7 +72,6 @@
           role="button"
           tabindex="0"
           aria-label="Drop file here or click to browse"
-          onkeydown="if(event.key==='Enter'||event.key===' '){onDropzoneClick(event);}"
         >
           <div id="empty-state">
             <div class="drop-hero" id="drop-hero">

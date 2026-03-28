@@ -121,17 +121,11 @@ function setStep(n) {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function onDragOver(e) {
   e.preventDefault();
-  if (S.files.length === 0) {
-    $("dropzone").classList.add("drag-over");
-    const dropEmoji = $("drop-emoji");
-    if (dropEmoji) dropEmoji.textContent = "📥";
-  }
+  if (S.files.length === 0) $("dropzone").classList.add("drag-over");
 }
 
 function onDragLeave() {
   $("dropzone").classList.remove("drag-over");
-  const dropEmoji = $("drop-emoji");
-  if (dropEmoji) dropEmoji.textContent = "📂";
 }
 
 function onDrop(e) {
@@ -167,21 +161,9 @@ function processFiles(fileList) {
     sendBtn.style.boxShadow = "";
   }
 
-  // Deduplicate: filter out files already in S.files by name+size
-  const existingKeys = new Set(S.files.map(f => f.name + ":" + f.size));
-  const uniqueNew = Array.from(fileList).filter(
-    f => !existingKeys.has(f.name + ":" + f.size)
-  );
-
-  const duplicateCount = fileList.length - uniqueNew.length;
-  if (duplicateCount > 0) {
-    toast("⚠️", "Duplicate skipped", `${duplicateCount} file(s) already in queue.`);
-  }
-
-  if (uniqueNew.length === 0) return;
-
-  // Append new (unique) files
-  S.files = [...S.files, ...uniqueNew];
+  // Append new files
+  const newFiles = Array.from(fileList);
+  S.files = [...S.files, ...newFiles];
   S.currentFileIndex = 0;
 
   // Reset the global counters for the new batch
@@ -241,9 +223,6 @@ function processFiles(fileList) {
 }
 
 function clearFile() {
-  // Revoke any object URLs to prevent memory leaks
-  S.files.forEach(f => { if (f._objectURL) URL.revokeObjectURL(f._objectURL); });
-
   S.files = [];
   S.currentFileIndex = 0;
   S.batchOrig = 0;
@@ -282,58 +261,27 @@ function joinRoom(code) {
 }
 
 function doConnect() {
-  const raw = $("peer-input").value.trim().toUpperCase();
-
-  // Accept both word-number format (PINE-1234) and raw 4+ char codes
-  if (raw.length < 4) {
+  const code = $("peer-input").value.trim();
+  if (code.length < 4) {
     const inp = $("peer-input");
     inp.classList.add("shake");
     inp.addEventListener("animationend", () => inp.classList.remove("shake"), {
       once: true,
     });
     inp.focus();
-    toast("⚠️", "Invalid code", "Enter your friend's share code first.");
     return;
   }
 
-  // Prevent connecting to your own code
-  if (raw === $("my-code").textContent.trim().toUpperCase()) {
-    const inp = $("peer-input");
-    inp.classList.add("shake");
-    inp.addEventListener("animationend", () => inp.classList.remove("shake"), {
-      once: true,
-    });
-    toast("🤔", "That's your own code", "Enter your friend's code, not yours.");
-    return;
-  }
-
-  S.peerCode = raw;
+  S.peerCode = code;
   $("bridge").classList.add("visible");
   $("or-sep").style.display = "none";
   $("connect-btn").textContent = "Connecting…";
   $("connect-btn").disabled = true;
 
-  // Connection timeout — show specific error after 15s
-  S._connectTimeout = setTimeout(() => {
-    if (!S.connected) {
-      $("connect-btn").textContent = "Connect with friend →";
-      $("connect-btn").disabled = false;
-      $("bridge").classList.remove("visible");
-      $("or-sep").style.display = "";
-      toast("⏱️", "Network timeout", "Could not reach peer. Check the code and try again.");
-    }
-  }, 15000);
-
-  joinRoom(raw);
+  joinRoom(code);
 }
 
 function onPeerConnected() {
-  // Clear the timeout since we connected successfully
-  if (S._connectTimeout) {
-    clearTimeout(S._connectTimeout);
-    S._connectTimeout = null;
-  }
-
   const btn = $("connect-btn");
   btn.textContent = "✓ Connected";
   btn.style.background = "linear-gradient(135deg, #22C55E, #16A34A)";
@@ -345,17 +293,13 @@ function onPeerConnected() {
 }
 
 function onRoomFull() {
-  if (S._connectTimeout) {
-    clearTimeout(S._connectTimeout);
-    S._connectTimeout = null;
-  }
   $("bridge").classList.remove("visible");
   $("or-sep").style.display = "";
   $("connect-btn").textContent = "Connect with friend →";
   $("connect-btn").disabled = false;
   $("peer-input").value = "";
   $("peer-input").focus();
-  toast("⛔", "Peer offline or invalid", "Double-check the code — the room is full or doesn't exist.");
+  toast("⛔", "Room full", "That code already has 2 people connected.");
 }
 
 function showExitModal() {
@@ -675,25 +619,4 @@ document.addEventListener("DOMContentLoaded", () => {
   $("my-code").textContent = wordCode();
   show("sec-connect");
   hide("sec-how");
-
-  // Apply spring animation to all primary buttons on click
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".btn-primary, .btn-danger");
-    if (btn && !btn.disabled) {
-      btn.classList.remove("spring");
-      void btn.offsetWidth; // reflow to restart animation
-      btn.classList.add("spring");
-      btn.addEventListener("animationend", () => btn.classList.remove("spring"), { once: true });
-    }
-  });
-
-  // Apply scale:0.98 active feedback to glass buttons on mobile
-  document.addEventListener("pointerdown", (e) => {
-    const btn = e.target.closest(".btn-glass");
-    if (btn && !btn.disabled) {
-      btn.style.transform = "scale(0.98)";
-      const up = () => { btn.style.transform = ""; document.removeEventListener("pointerup", up); };
-      document.addEventListener("pointerup", up);
-    }
-  });
 });

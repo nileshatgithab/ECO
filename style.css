@@ -96,7 +96,6 @@ body {
   line-height: 1.55;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button {
@@ -244,8 +243,7 @@ input {
 }
 
 .logo-sub {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 11px;
   color: var(--ink-dim);
   letter-spacing: 0.3px;
 }
@@ -277,12 +275,6 @@ input {
 
 .conn-badge:active {
   transform: scale(0.96);
-}
-
-.conn-badge:focus-visible {
-  outline: 2px solid var(--teal-deep);
-  outline-offset: 3px;
-  border-radius: 100px;
 }
 
 .conn-dot {
@@ -424,11 +416,6 @@ input {
   overflow: hidden;
   transition:
     box-shadow 0.25s var(--ease),
-    transform 0.25s var(--ease),
-    background-color 0.3s ease,
-    border-color 0.3s ease;
-  transition:
-    box-shadow 0.25s var(--ease),
     transform 0.25s var(--ease);
 }
 
@@ -448,7 +435,7 @@ input {
 }
 
 .section-label {
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 3.5px;
   text-transform: uppercase;
@@ -475,7 +462,7 @@ input {
   padding: 52px 28px;
   text-align: center;
   cursor: pointer;
-  transition: all 0.28s var(--spring), background-color 0.3s ease;
+  transition: all 0.28s var(--spring);
   position: relative;
   overflow: hidden;
   animation: fade-up 0.55s 0.15s var(--ease) both;
@@ -758,7 +745,7 @@ input {
 .code-label {
   display: flex;
   align-items: center;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 3.5px;
   text-transform: uppercase;
@@ -1381,15 +1368,6 @@ input {
   cursor: not-allowed;
   transform: none !important;
   box-shadow: none !important;
-}
-
-/* ── Keyboard navigation focus ring ── */
-.btn:focus-visible,
-.copy-btn:focus-visible,
-.drop-zone:focus-visible,
-.step-item:focus-visible {
-  outline: 2px solid var(--teal-deep);
-  outline-offset: 3px;
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
