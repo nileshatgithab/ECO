@@ -14,9 +14,12 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+<<<<<<< HEAD
     <!-- ══════════════════════════════════════════
      ANIMATED MESH BACKGROUND
 ══════════════════════════════════════════ -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
     <div class="mesh-bg" aria-hidden="true">
       <div class="mesh-blob blob-a"></div>
       <div class="mesh-blob blob-b"></div>
@@ -24,11 +27,17 @@
       <div class="mesh-blob blob-d"></div>
     </div>
 
+<<<<<<< HEAD
     <!-- Confetti canvas -->
     <canvas id="fx"></canvas>
 
     <div class="app">
       <!-- ══ HEADER ══ -->
+=======
+    <canvas id="fx"></canvas>
+
+    <div class="app">
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
       <header class="header">
         <div class="logo">
           <div class="logo-mark" aria-hidden="true">🔗</div>
@@ -49,7 +58,10 @@
         </div>
       </header>
 
+<<<<<<< HEAD
       <!-- ══ STEP INDICATOR ══ -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
       <div class="stepper" id="stepper" role="list">
         <div class="step-item active" id="s1" role="listitem">
           <div class="step-circle"><span class="step-num">1</span></div>
@@ -67,7 +79,10 @@
         </div>
       </div>
 
+<<<<<<< HEAD
       <!-- ══ STEP 1 — DROP ZONE ══ -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
       <section class="section" id="sec-drop">
         <div
           class="drop-zone"
@@ -80,12 +95,19 @@
           tabindex="0"
           aria-label="Drop file here or click to browse"
         >
+<<<<<<< HEAD
           <!-- Empty state -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
           <div id="empty-state">
             <div class="drop-hero" id="drop-hero">
               <span id="drop-emoji">📂</span>
             </div>
+<<<<<<< HEAD
             <h2 class="drop-title">Drop a file here</h2>
+=======
+            <h2 class="drop-title">Drop files here</h2>
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
             <p class="drop-sub">
               Documents, photos, code — anything. ECO shrinks it and delivers it
               straight to your friend, privately.
@@ -97,14 +119,21 @@
                 event.stopPropagation();
               "
             >
+<<<<<<< HEAD
               Choose a file
+=======
+              Choose files
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
             </button>
             <p style="font-size: 12px; color: var(--ink-dim); margin-top: 13px">
               Any file type · Up to 500 MB
             </p>
           </div>
 
+<<<<<<< HEAD
           <!-- File loaded state -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
           <div class="file-row" id="file-row" style="display: none">
             <div class="file-thumb" id="file-thumb">
               <span id="file-emoji">📄</span>
@@ -127,7 +156,10 @@
           </div>
         </div>
 
+<<<<<<< HEAD
         <!-- First-run coach mark -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
         <div class="coach" id="coach1">
           <button
             class="coach-x"
@@ -141,7 +173,10 @@
         </div>
       </section>
 
+<<<<<<< HEAD
       <!-- ══ STEP 1b — COMPRESSION SNAPSHOT ══ -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
       <section
         class="section reveal"
         id="sec-compression"
@@ -189,13 +224,19 @@
         </div>
       </section>
 
+<<<<<<< HEAD
       <!-- ══ STEP 2 — CONNECT ══ -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
       <section class="section reveal" id="sec-connect" style="display: none">
         <div class="section-label">Connect with a friend</div>
         <div class="card">
           <div class="card-body">
+<<<<<<< HEAD
             <!-- Your share code -->
             <!-- FIX: added display:flex + align-items:center so tooltip sits inline correctly -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
             <div class="code-label" style="display: flex; align-items: center">
               Your share code
               <div class="tip-wrap">
@@ -213,7 +254,10 @@
               </button>
             </div>
 
+<<<<<<< HEAD
             <!-- Visual connection bridge -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
             <div class="bridge" id="bridge">
               <div class="bridge-row">
                 <div class="bridge-node lit" id="bn-you">
@@ -254,24 +298,36 @@
                     />
                   </svg>
                 </div>
+<<<<<<< HEAD
                 <!-- FIX: removed id="bn-friend-icon" hide logic — CSS .bridge-node.lit handles the ✓ via ::after -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
                 <div class="bridge-node" id="bn-friend">
                   <div class="bridge-icon"><span>👤</span></div>
                   <div class="bridge-lbl">Friend</div>
                 </div>
               </div>
+<<<<<<< HEAD
               <!-- Caption now BELOW the bridge-row, no longer inside bridge-track -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
               <div class="bridge-caption" id="bridge-caption">
                 Establishing link…
               </div>
             </div>
 
+<<<<<<< HEAD
             <!-- Divider -->
             <div class="or-sep" id="or-sep">then enter theirs</div>
 
             <!-- Friend's code input -->
             <div class="field-wrap">
               <!-- FIX: same inline flex fix for label tooltip alignment -->
+=======
+            <div class="or-sep" id="or-sep">then enter theirs</div>
+
+            <div class="field-wrap">
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
               <label
                 class="field-label"
                 for="peer-input"
@@ -319,7 +375,10 @@
             </button>
           </div>
 
+<<<<<<< HEAD
           <!-- Privacy footer -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
           <div class="privacy-bar">
             <span>🔒</span>
             <span>Direct connection — file never touches a server</span>
@@ -334,12 +393,18 @@
         </div>
       </section>
 
+<<<<<<< HEAD
       <!-- ══ STEP 3 — SEND ══ -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
       <section class="section reveal" id="sec-send" style="display: none">
         <div class="section-label">Ready to send</div>
         <div class="card">
           <div class="card-body">
+<<<<<<< HEAD
             <!-- Pre-send checklist -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
             <div id="send-idle">
               <div class="feat-row" style="padding-top: 0">
                 <div class="feat-icon" style="background: var(--green-soft)">
@@ -376,7 +441,10 @@
               </button>
             </div>
 
+<<<<<<< HEAD
             <!-- Active transfer -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
             <div id="send-active" style="display: none">
               <div class="prog-header">
                 <div class="prog-label">Sending your file…</div>
@@ -387,7 +455,10 @@
               </div>
               <div class="prog-sub" id="prog-sub">Encrypting…</div>
 
+<<<<<<< HEAD
               <!-- Speedometer -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
               <div class="speedo">
                 <div>
                   <div class="speedo-val" id="speedo-val">0 MB/s</div>
@@ -422,11 +493,28 @@
         </div>
       </section>
 
+<<<<<<< HEAD
       <!-- ══ SUCCESS STATE ══ -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
       <div class="success" id="sec-success" style="display: none">
         <span class="success-emoji">🎉</span>
         <h2 class="success-title">Delivered!</h2>
         <p class="success-sub" id="success-sub">Your file arrived safely.</p>
+<<<<<<< HEAD
+=======
+
+        <div
+          id="success-saved"
+          style="
+            color: var(--green);
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 16px;
+          "
+        ></div>
+
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
         <div class="success-badge">
           🔒 Never touched a server · Wiped from memory
         </div>
@@ -442,7 +530,10 @@
         </div>
       </div>
 
+<<<<<<< HEAD
       <!-- ══ HOW IT WORKS ══ -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
       <section
         class="section"
         id="sec-how"
@@ -488,7 +579,10 @@
         </div>
       </section>
 
+<<<<<<< HEAD
       <!-- ══ EXIT CONFIRM MODAL ══ -->
+=======
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
       <div class="modal-overlay" id="exit-modal" style="display: none">
         <div class="modal-box">
           <div class="modal-icon">⚠️</div>
@@ -506,6 +600,7 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
     <!-- /.app -->
 
     <!-- Toast notification -->
@@ -530,6 +625,31 @@
     />
 
     <script src="/socket.io/socket.io.js"></script>
+=======
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <span class="toast-icon" id="toast-icon">✅</span>
+      <div>
+        <div style="font-weight: 600; font-size: 14px" id="toast-title">—</div>
+        <div
+          style="font-size: 12px; color: var(--ink-dim)"
+          id="toast-sub"
+        ></div>
+      </div>
+    </div>
+
+    <input
+      type="file"
+      id="file-input"
+      multiple
+      onchange="onFileSelect(event)"
+      style="display: none"
+      aria-hidden="true"
+    />
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="rle.js"></script>
+    <script src="huffman.js"></script>
+>>>>>>> bc8a909 (feat(ui): build responsive glassmorphism interface and batch file queue logic)
     <script src="webrtc.js"></script>
     <script src="script.js"></script>
   </body>

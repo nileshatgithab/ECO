@@ -145,6 +145,7 @@ button {
   border: none;
   background: none;
 }
+
 input {
   font-family: inherit;
 }
@@ -175,6 +176,7 @@ input {
   left: -220px;
   animation: drift-a 26s ease-in-out infinite alternate;
 }
+
 .blob-b {
   width: 500px;
   height: 500px;
@@ -183,6 +185,7 @@ input {
   right: -160px;
   animation: drift-b 32s ease-in-out infinite alternate;
 }
+
 .blob-c {
   width: 420px;
   height: 420px;
@@ -191,6 +194,7 @@ input {
   left: 10%;
   animation: drift-c 20s ease-in-out infinite alternate;
 }
+
 .blob-d {
   width: 300px;
   height: 300px;
@@ -254,6 +258,7 @@ input {
   overflow: hidden;
   flex-shrink: 0;
 }
+
 .logo-mark::after {
   content: "";
   position: absolute;
@@ -269,6 +274,7 @@ input {
 .logo-text {
   line-height: 1.2;
 }
+
 .logo-name {
   font-family: "Fraunces", serif;
   font-size: 20px;
@@ -276,6 +282,7 @@ input {
   color: var(--ink);
   letter-spacing: -0.3px;
 }
+
 .logo-sub {
   font-size: 11px;
   color: var(--ink-dim);
@@ -301,10 +308,12 @@ input {
   transition: all 0.2s var(--ease);
   -webkit-tap-highlight-color: transparent;
 }
+
 .conn-badge:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
+
 .conn-badge:active {
   transform: scale(0.96);
 }
@@ -319,11 +328,13 @@ input {
     box-shadow 0.4s;
   flex-shrink: 0;
 }
+
 .conn-dot.live {
   background: var(--green);
   box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
   animation: ripple-green 2s ease infinite;
 }
+
 .conn-dot.searching {
   background: var(--amber);
   animation: scale-pulse 0.85s ease infinite;
@@ -348,9 +359,11 @@ input {
   opacity: 0.35;
   transition: opacity 0.4s var(--ease);
 }
+
 .step-item.active {
   opacity: 1;
 }
+
 .step-item.done {
   opacity: 0.7;
 }
@@ -370,22 +383,26 @@ input {
   transition: all 0.4s var(--spring);
   position: relative;
 }
+
 .step-item.active .step-circle {
   border-color: var(--teal-deep);
   background: var(--teal-deep);
   color: #fff;
   box-shadow: 0 0 0 4px var(--teal-glow);
 }
+
 .step-item.done .step-circle {
   border-color: var(--green);
   background: var(--green);
   color: #fff;
 }
+
 .step-item.done .step-circle::after {
   content: "✓";
   position: absolute;
   font-size: 11px;
 }
+
 .step-item.done .step-num {
   display: none;
 }
@@ -398,9 +415,11 @@ input {
   color: var(--ink-dim);
   white-space: nowrap;
 }
+
 .step-item.active .step-label {
   color: var(--teal-deep);
 }
+
 .step-item.done .step-label {
   color: var(--green);
 }
@@ -415,9 +434,11 @@ input {
     background 0.5s var(--ease),
     box-shadow 0.5s;
 }
+
 .step-connector.done {
   background: var(--green);
 }
+
 .step-connector.active {
   background: var(--teal-deep);
   box-shadow: 0 0 6px var(--teal-glow-strong);
@@ -438,6 +459,7 @@ input {
     box-shadow 0.25s var(--ease),
     transform 0.25s var(--ease);
 }
+
 .card:hover {
   box-shadow: var(--shadow-md);
 }
@@ -522,6 +544,7 @@ input {
     var(--teal-soft) 100%
   );
 }
+
 .drop-zone.loaded {
   border-style: solid;
   border-color: var(--teal-mid);
@@ -547,6 +570,7 @@ input {
   overflow: hidden;
   position: relative;
 }
+
 .drop-zone.drag-over .drop-hero {
   animation: none;
   transform: scale(1.14) rotate(-5deg);
@@ -554,6 +578,7 @@ input {
     var(--shadow-lg),
     0 0 0 3px var(--teal);
 }
+
 .drop-hero img {
   width: 100%;
   height: 100%;
@@ -570,6 +595,7 @@ input {
   margin-bottom: 9px;
   letter-spacing: -0.3px;
 }
+
 .drop-sub {
   font-size: 14px;
   color: var(--ink-dim);
@@ -589,6 +615,7 @@ input {
   width: 100%;
   animation: spring-in 0.4s var(--spring) both;
 }
+
 .file-thumb {
   width: 52px;
   height: 52px;
@@ -602,6 +629,7 @@ input {
   flex-shrink: 0;
   overflow: hidden;
 }
+
 .file-thumb img {
   width: 100%;
   height: 100%;
@@ -609,6 +637,7 @@ input {
   border-radius: inherit;
   animation: blur-up 0.4s var(--ease) both;
 }
+
 .file-name {
   font-weight: 600;
   font-size: 15px;
@@ -618,16 +647,19 @@ input {
   text-overflow: ellipsis;
   margin-bottom: 3px;
 }
+
 .file-meta {
   font-size: 13px;
   color: var(--ink-dim);
 }
+
 .chips {
   display: flex;
   gap: 5px;
   flex-wrap: wrap;
   margin-top: 7px;
 }
+
 .chip {
   display: inline-block;
   padding: 3px 9px;
@@ -635,15 +667,18 @@ input {
   font-size: 11px;
   font-weight: 600;
 }
+
 .chip-teal {
   background: var(--teal-soft);
   color: var(--teal-deep);
   border: 1px solid var(--teal-mid);
 }
+
 .chip-green {
   background: var(--green-soft);
   color: #15803d;
 }
+
 @media (prefers-color-scheme: dark) {
   .chip-green {
     background: rgba(34, 197, 94, 0.15);
@@ -670,6 +705,7 @@ input {
   position: relative;
   overflow: hidden;
 }
+
 .compression-banner::before {
   content: "";
   position: absolute;
@@ -680,6 +716,7 @@ input {
   background: rgba(255, 255, 255, 0.06);
   border-radius: 50%;
 }
+
 .c-pct {
   font-family: "Fraunces", serif;
   font-size: 44px;
@@ -689,12 +726,14 @@ input {
   flex-shrink: 0;
   animation: count-in 0.5s var(--spring) both;
 }
+
 .c-pct sup {
   font-size: 20px;
   font-weight: 300;
   letter-spacing: 0;
   opacity: 0.8;
 }
+
 .c-detail {
   font-size: 13px;
   opacity: 0.85;
@@ -708,6 +747,7 @@ input {
   gap: 9px;
   margin-top: 9px;
 }
+
 .stat-box {
   background: var(--glass-bg);
   backdrop-filter: blur(10px);
@@ -719,10 +759,12 @@ input {
     transform 0.2s var(--spring),
     box-shadow 0.2s;
 }
+
 .stat-box:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
+
 .stat-val {
   font-family: "Fraunces", serif;
   font-size: 21px;
@@ -732,6 +774,7 @@ input {
   margin-bottom: 4px;
   letter-spacing: -0.4px;
 }
+
 .stat-lbl {
   font-size: 12px;
   color: var(--ink-dim);
@@ -740,8 +783,6 @@ input {
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    CONNECT CARD
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-
-/* FIX: added display:flex + align-items:center so the tooltip ? sits inline */
 .code-label {
   display: flex;
   align-items: center;
@@ -766,17 +807,20 @@ input {
   position: relative;
   overflow: hidden;
 }
+
 @media (prefers-color-scheme: dark) {
   .code-display {
     background: rgba(255, 255, 255, 0.04);
   }
 }
+
 .code-display.pulse-glow {
   border-color: var(--teal);
   box-shadow:
     0 0 0 3px var(--teal-glow-strong),
     inset 0 0 20px var(--teal-glow);
 }
+
 .code-val {
   font-family: "Fraunces", serif;
   font-size: 27px;
@@ -787,6 +831,7 @@ input {
   position: relative;
   z-index: 1;
 }
+
 .copy-btn {
   background: var(--glass-bg);
   backdrop-filter: blur(8px);
@@ -802,15 +847,18 @@ input {
   position: relative;
   z-index: 1;
 }
+
 .copy-btn:hover {
   background: var(--teal-soft);
   color: var(--teal-deep);
   border-color: var(--teal-mid);
   transform: scale(1.05);
 }
+
 .copy-btn:active {
   transform: scale(0.95);
 }
+
 .copy-btn.copied {
   background: var(--green-soft);
   color: #15803d;
@@ -823,6 +871,7 @@ input {
   margin: 18px 0;
   animation: spring-in 0.5s var(--spring) both;
 }
+
 .bridge.visible {
   display: block;
 }
@@ -832,6 +881,7 @@ input {
   align-items: center;
   position: relative;
 }
+
 .bridge-node {
   display: flex;
   flex-direction: column;
@@ -840,6 +890,7 @@ input {
   min-width: 72px;
   z-index: 2;
 }
+
 .bridge-icon {
   width: 46px;
   height: 46px;
@@ -853,6 +904,7 @@ input {
   transition: all 0.45s var(--spring);
   position: relative;
 }
+
 .bridge-node.lit .bridge-icon {
   border-color: var(--teal-deep);
   background: var(--teal-deep);
@@ -860,9 +912,11 @@ input {
     0 0 0 5px var(--teal-glow),
     var(--shadow-teal);
 }
+
 .bridge-node.lit .bridge-icon > span {
   display: none;
 }
+
 .bridge-node.lit .bridge-icon::after {
   content: "✓";
   color: #fff;
@@ -870,6 +924,7 @@ input {
   font-weight: 700;
   position: absolute;
 }
+
 .bridge-lbl {
   font-size: 10px;
   font-weight: 600;
@@ -877,6 +932,7 @@ input {
   text-transform: uppercase;
   color: var(--ink-dim);
 }
+
 .bridge-node.lit .bridge-lbl {
   color: var(--teal-deep);
 }
@@ -888,6 +944,7 @@ input {
   margin: 0 4px;
   padding-bottom: 14px;
 }
+
 .bridge-track svg {
   width: 100%;
   height: 30px;
@@ -900,6 +957,7 @@ input {
   fill: none;
   stroke-dasharray: 5 4;
 }
+
 .bt-line {
   stroke: var(--teal-deep);
   stroke-width: 2.5;
@@ -909,9 +967,11 @@ input {
   transition: stroke-dashoffset 1.1s var(--ease);
   filter: drop-shadow(0 0 5px var(--teal));
 }
+
 .bt-line.drawn {
   stroke-dashoffset: 0;
 }
+
 .bt-particle {
   fill: var(--teal);
   filter: drop-shadow(0 0 3px var(--teal));
@@ -929,6 +989,7 @@ input {
   left: 0;
   right: 0;
 }
+
 .bridge-caption.live {
   color: var(--green);
   animation: fade-in 0.4s var(--ease);
@@ -943,6 +1004,7 @@ input {
   font-size: 13px;
   color: var(--ink-dim);
 }
+
 .or-sep::before,
 .or-sep::after {
   content: "";
@@ -956,7 +1018,6 @@ input {
   margin-bottom: 14px;
 }
 
-/* FIX: field-label needs flex so tooltip aligns inline with label text */
 .field-label {
   display: flex;
   align-items: center;
@@ -965,6 +1026,7 @@ input {
   color: var(--ink-soft);
   margin-bottom: 6px;
 }
+
 .field {
   width: 100%;
   padding: 13px 15px;
@@ -977,16 +1039,20 @@ input {
   outline: none;
   transition: all 0.2s var(--ease);
 }
+
 .field::placeholder {
   color: var(--ink-dim);
 }
+
 .field:focus {
   border-color: var(--teal-deep);
   box-shadow: 0 0 0 3.5px var(--teal-glow);
 }
+
 .field.shake {
   animation: shake 0.4s var(--ease);
 }
+
 .field-hint {
   font-size: 12px;
   color: var(--ink-dim);
@@ -1000,6 +1066,7 @@ input {
   display: inline-flex;
   align-items: center;
 }
+
 .tip-q {
   width: 17px;
   height: 17px;
@@ -1015,11 +1082,13 @@ input {
   margin-left: 5px;
   transition: all 0.15s;
 }
+
 .tip-q:hover {
   background: var(--teal-soft);
   color: var(--teal-deep);
   border-color: var(--teal-mid);
 }
+
 .tip-box {
   display: none;
   position: absolute;
@@ -1027,7 +1096,7 @@ input {
   left: 50%;
   transform: translateX(-50%);
   background: var(--ink);
-  color: #fff;
+  color: #0f172a;
   font-size: 12.5px;
   line-height: 1.5;
   padding: 11px 14px;
@@ -1037,6 +1106,7 @@ input {
   box-shadow: var(--shadow-lg);
   z-index: 300;
 }
+
 .tip-box::after {
   content: "";
   position: absolute;
@@ -1046,6 +1116,7 @@ input {
   border: 6px solid transparent;
   border-top-color: var(--ink);
 }
+
 .tip-wrap:hover .tip-box {
   display: block;
 }
@@ -1070,6 +1141,19 @@ input {
   }
 }
 
+/* Privacy bar specific tooltip overrides to prevent edge cut-off */
+.privacy-bar .tip-box {
+  left: auto;
+  right: -10px;
+  transform: none;
+}
+
+.privacy-bar .tip-box::after {
+  left: auto;
+  right: 15px;
+  transform: none;
+}
+
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    SEND CARD
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
@@ -1080,9 +1164,11 @@ input {
   border-bottom: 1px solid var(--border);
   align-items: flex-start;
 }
+
 .feat-row:last-of-type {
   border-bottom: none;
 }
+
 .feat-icon {
   width: 36px;
   height: 36px;
@@ -1093,12 +1179,14 @@ input {
   flex-shrink: 0;
   margin-top: 2px;
 }
+
 .feat-title {
   font-size: 14px;
   font-weight: 600;
   color: var(--ink);
   margin-bottom: 2px;
 }
+
 .feat-desc {
   font-size: 13px;
   color: var(--ink-dim);
@@ -1112,11 +1200,13 @@ input {
   align-items: center;
   margin-bottom: 11px;
 }
+
 .prog-label {
   font-size: 15px;
   font-weight: 500;
   color: var(--ink);
 }
+
 .prog-pct {
   font-family: "Fraunces", serif;
   font-size: 24px;
@@ -1132,6 +1222,7 @@ input {
   overflow: hidden;
   border: 1px solid var(--border);
 }
+
 .prog-fill {
   height: 100%;
   border-radius: 100px;
@@ -1146,6 +1237,7 @@ input {
   transition: width 0.22s var(--ease);
   animation: shimmer 2s linear infinite;
 }
+
 .prog-sub {
   font-size: 13px;
   color: var(--ink-dim);
@@ -1163,11 +1255,13 @@ input {
   border: 1px solid var(--border);
   margin-top: 12px;
 }
+
 @media (prefers-color-scheme: dark) {
   .speedo {
     background: rgba(255, 255, 255, 0.04);
   }
 }
+
 .speedo-val {
   font-family: "Fraunces", serif;
   font-size: 26px;
@@ -1176,19 +1270,23 @@ input {
   letter-spacing: -0.5px;
   min-width: 94px;
 }
+
 .speedo-val.tick {
   animation: tick-flash 0.25s var(--ease);
 }
+
 .speedo-lbl {
   font-size: 12px;
   color: var(--ink-dim);
   margin-top: 1px;
 }
+
 .speedo-sub {
   font-size: 11px;
   color: var(--ink-dim);
   margin-top: 2px;
 }
+
 .speedo-bar-track {
   flex: 1;
   height: 6px;
@@ -1196,12 +1294,14 @@ input {
   border-radius: 100px;
   overflow: hidden;
 }
+
 .speedo-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--teal-soft), var(--teal-deep));
   border-radius: 100px;
   transition: width 0.35s var(--ease);
 }
+
 .peak-row {
   display: flex;
   justify-content: space-between;
@@ -1230,6 +1330,7 @@ input {
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 }
+
 .btn::after {
   content: "";
   position: absolute;
@@ -1243,6 +1344,7 @@ input {
   transition: opacity 0.15s;
   border-radius: inherit;
 }
+
 .btn:active::after {
   opacity: 1;
 }
@@ -1253,10 +1355,12 @@ input {
   font-weight: 600;
   box-shadow: var(--shadow-teal);
 }
+
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 32px rgba(15, 147, 133, 0.4);
 }
+
 .btn-primary:active {
   transform: scale(0.94);
   box-shadow: 0 3px 12px rgba(15, 147, 133, 0.28);
@@ -1264,6 +1368,7 @@ input {
     transform 0.06s,
     box-shadow 0.08s;
 }
+
 .btn-primary.spring {
   animation: btn-spring 0.5s var(--spring);
 }
@@ -1275,10 +1380,12 @@ input {
   border: 1px solid var(--border);
   box-shadow: var(--shadow-xs);
 }
+
 .btn-glass:hover {
   background: var(--cream);
   transform: translateY(-1px);
 }
+
 .btn-glass:active {
   transform: scale(0.95);
 }
@@ -1286,14 +1393,17 @@ input {
 .btn-full {
   width: 100%;
 }
+
 .btn-lg {
   padding: 15px 34px;
   font-size: 16px;
 }
+
 .btn-sm {
   padding: 9px 17px;
   font-size: 13px;
 }
+
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -1319,6 +1429,7 @@ input {
   position: relative;
   overflow: hidden;
 }
+
 @media (prefers-color-scheme: dark) {
   .success {
     background: linear-gradient(
@@ -1329,6 +1440,7 @@ input {
     border-color: rgba(34, 197, 94, 0.22);
   }
 }
+
 .success::before {
   content: "";
   position: absolute;
@@ -1344,12 +1456,14 @@ input {
   );
   border-radius: 50%;
 }
+
 .success-emoji {
   font-size: 60px;
   display: block;
   margin-bottom: 18px;
   animation: pop-in 0.7s var(--spring) both;
 }
+
 .success-title {
   font-family: "Fraunces", serif;
   font-size: 30px;
@@ -1358,6 +1472,7 @@ input {
   margin-bottom: 10px;
   letter-spacing: -0.5px;
 }
+
 .success-sub {
   font-size: 15px;
   color: var(--ink-soft);
@@ -1367,6 +1482,7 @@ input {
   margin-left: auto;
   margin-right: auto;
 }
+
 .success-badge {
   display: inline-flex;
   align-items: center;
@@ -1382,6 +1498,7 @@ input {
   margin-bottom: 26px;
   box-shadow: var(--shadow-sm);
 }
+
 @media (prefers-color-scheme: dark) {
   .success-badge {
     color: #4ade80;
@@ -1412,9 +1529,11 @@ input {
   white-space: nowrap;
   transition: transform 0.4s var(--spring);
 }
+
 .toast.show {
   transform: translateX(-50%) translateY(0);
 }
+
 .toast-icon {
   font-size: 20px;
 }
@@ -1441,9 +1560,11 @@ input {
   margin-top: 11px;
   animation: spring-in 0.4s var(--spring) both;
 }
+
 .coach.on {
   display: block;
 }
+
 .coach::before {
   content: "";
   position: absolute;
@@ -1452,6 +1573,7 @@ input {
   border: 7px solid transparent;
   border-bottom-color: var(--ink);
 }
+
 .coach-x {
   float: right;
   color: rgba(255, 255, 255, 0.4);
@@ -1460,6 +1582,7 @@ input {
   line-height: 1;
   transition: color 0.15s;
 }
+
 .coach-x:hover {
   color: rgba(255, 255, 255, 0.9);
 }
@@ -1488,6 +1611,7 @@ input {
   place-items: center;
   animation: fade-in 0.2s var(--ease);
 }
+
 .modal-box {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
@@ -1501,10 +1625,12 @@ input {
   text-align: center;
   animation: spring-in 0.35s var(--spring) both;
 }
+
 .modal-icon {
   font-size: 42px;
   margin-bottom: 14px;
 }
+
 .modal-title {
   font-family: "Fraunces", serif;
   font-size: 20px;
@@ -1512,17 +1638,20 @@ input {
   color: var(--ink);
   margin-bottom: 10px;
 }
+
 .modal-sub {
   font-size: 14px;
   color: var(--ink-dim);
   line-height: 1.6;
   margin-bottom: 24px;
 }
+
 .modal-btns {
   display: flex;
   gap: 10px;
   justify-content: center;
 }
+
 .btn-danger {
   display: inline-flex;
   align-items: center;
@@ -1539,10 +1668,12 @@ input {
   box-shadow: 0 8px 24px rgba(239, 68, 68, 0.3);
   transition: all 0.2s var(--ease);
 }
+
 .btn-danger:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 32px rgba(239, 68, 68, 0.4);
 }
+
 .btn-danger:active {
   transform: scale(0.94);
 }

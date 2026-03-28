@@ -2,13 +2,15 @@
    STATE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 const S = {
-  file: null,
-  ratio: 0.7,
+  files: [],
+  currentFileIndex: 0,
   connected: false,
   peerCode: null,
   firstFile: true,
   peak: 0,
   sendTimer: null,
+  batchOrig: 0, // ✨ NEW: Tracks total original bytes across all files
+  batchComp: 0, // ✨ NEW: Tracks total compressed network bytes across all files
 };
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -58,58 +60,6 @@ function fileEmoji(type) {
   )
     return "📝";
   return "📁";
-}
-
-function fileType(type) {
-  if (!type) return "File";
-  const map = {
-    json: "JSON",
-    javascript: "JavaScript",
-    "text/plain": "Text",
-    html: "HTML",
-    css: "CSS",
-    "image/jpeg": "JPEG",
-    "image/jpg": "JPEG",
-    "image/png": "PNG",
-    "image/gif": "GIF",
-    "image/webp": "WebP",
-    pdf: "PDF",
-    zip: "ZIP",
-    "video/mp4": "MP4",
-    audio: "Audio",
-  };
-  for (const [key, val] of Object.entries(map)) {
-    if (type.includes(key)) return val;
-  }
-  return (type.split("/")[1] || "File").toUpperCase();
-}
-
-function compressionRatio(type) {
-  if (!type) return 0.72;
-  if (
-    type.includes("text") ||
-    type.includes("json") ||
-    type.includes("javascript") ||
-    type.includes("html") ||
-    type.includes("css")
-  )
-    return 0.33 + Math.random() * 0.19;
-  if (
-    type.includes("image/jpeg") ||
-    type.includes("video") ||
-    type.includes("audio")
-  )
-    return 0.91 + Math.random() * 0.06;
-  if (type.includes("zip") || type.includes("rar"))
-    return 0.96 + Math.random() * 0.03;
-  return 0.6 + Math.random() * 0.24;
-}
-
-function estTime(bytes) {
-  const secs = (bytes * 8) / 1500000;
-  if (secs < 3) return "< 3 sec";
-  if (secs < 60) return "~" + Math.ceil(secs) + "s";
-  return "~" + Math.ceil(secs / 60) + "min";
 }
 
 function wordCode() {
@@ -171,7 +121,7 @@ function setStep(n) {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function onDragOver(e) {
   e.preventDefault();
-  if (!S.file) $("dropzone").classList.add("drag-over");
+  if (S.files.length === 0) $("dropzone").classList.add("drag-over");
 }
 
 function onDragLeave() {
@@ -181,23 +131,24 @@ function onDragLeave() {
 function onDrop(e) {
   e.preventDefault();
   $("dropzone").classList.remove("drag-over");
-  if (e.dataTransfer.files[0]) processFile(e.dataTransfer.files[0]);
+  if (e.dataTransfer.files.length > 0) processFiles(e.dataTransfer.files);
 }
 
 function onDropzoneClick() {
-  if (S.file) return;
   $("file-input").click();
 }
 
 function onFileSelect(e) {
-  if (e.target.files[0]) processFile(e.target.files[0]);
+  if (e.target.files.length > 0) {
+    processFiles(e.target.files);
+    e.target.value = "";
+  }
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   PROCESS FILE
+   PROCESS MULTIPLE FILES (APPEND MODE)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-function processFile(file) {
-  // ── FIX: Force reset the UI so send button wakes up on new file drop ──
+function processFiles(fileList) {
   $("sec-success").style.display = "none";
   hide("send-active");
   show("send-idle");
@@ -205,48 +156,55 @@ function processFile(file) {
   const sendBtn = $("send-btn");
   if (sendBtn) {
     sendBtn.disabled = false;
-    sendBtn.textContent = "Send this file →";
+    sendBtn.textContent = "Send batch →";
     sendBtn.style.background = "";
     sendBtn.style.boxShadow = "";
   }
 
-  S.file = file;
-  S.ratio = compressionRatio(file.type);
+  // Append new files
+  const newFiles = Array.from(fileList);
+  S.files = [...S.files, ...newFiles];
+  S.currentFileIndex = 0;
 
-  const comp = Math.floor(file.size * S.ratio);
-  const saved = Math.round((1 - S.ratio) * 100);
-  const emoji = fileEmoji(file.type);
-  const isImg = file.type.startsWith("image/");
+  // Reset the global counters for the new batch
+  S.batchOrig = 0;
+  S.batchComp = 0;
+
+  const totalSize = S.files.reduce((acc, file) => acc + file.size, 0);
+  const isMultiple = S.files.length > 1;
 
   $("dropzone").classList.add("loaded");
   hide("empty-state");
   $("file-row").style.display = "flex";
 
-  if (isImg) {
-    const url = URL.createObjectURL(file);
-    $("drop-hero").innerHTML = `<img src="${url}" alt="preview"/>`;
-    $("file-thumb").innerHTML = `<img src="${url}" alt="thumb"/>`;
+  if (isMultiple) {
+    $("drop-hero").innerHTML = `<span>📚</span>`;
+    $("file-thumb").innerHTML = `<span>📚</span>`;
+    $("file-name").textContent = `${S.files.length} files queued`;
+    $("file-meta").textContent = `Batch • ${fmtBytes(totalSize)}`;
   } else {
+    const file = S.files[0];
+    const emoji = fileEmoji(file.type);
     $("drop-hero").innerHTML = `<span>${emoji}</span>`;
     $("file-thumb").innerHTML = `<span>${emoji}</span>`;
+    $("file-name").textContent = file.name;
+    $("file-meta").textContent = `${fmtBytes(file.size)}`;
   }
 
-  $("file-name").textContent = file.name;
-  $("file-meta").textContent =
-    fileType(file.type) + " · " + fmtBytes(file.size);
   $("file-chips").innerHTML = `
     <span class="chip chip-teal">✓ Loaded</span>
-    <span class="chip chip-green">−${saved}% smaller</span>
+    <span class="chip chip-green">Smart Engine⚡</span>
   `;
 
   show("sec-compression");
-  $("c-pct").innerHTML = saved + "<sup>%</sup>";
+  $("c-pct").innerHTML = `<span style="font-size: 32px">Live⚡</span>`;
   $("c-detail").innerHTML =
-    `<strong>${fmtBytes(file.size)}</strong> → <strong>${fmtBytes(comp)}</strong> · ${Math.round((1 / S.ratio) * 10) / 10}× faster to send`;
-  $("s-orig").textContent = fmtBytes(file.size);
-  $("s-comp").textContent = fmtBytes(comp);
-  $("s-time").textContent = estTime(comp);
-  $("s-saved").textContent = fmtBytes(file.size - comp);
+    `<strong>${fmtBytes(totalSize)}</strong> will be processed dynamically.<br>Smart filter active.`;
+
+  $("s-orig").textContent = fmtBytes(totalSize);
+  $("s-comp").textContent = "TBD";
+  $("s-time").textContent = "Live";
+  $("s-saved").textContent = "TBD";
 
   setStep(2);
 
@@ -257,16 +215,18 @@ function processFile(file) {
 
   if (S.connected) updateSendSection();
 
-  toast(emoji, "File ready", file.name + " — shrunk by " + saved + "%");
+  toast(
+    "📂",
+    "Files added",
+    `You now have ${S.files.length} file(s) ready to stream.`,
+  );
 }
 
 function clearFile() {
-  ["drop-hero", "file-thumb"].forEach((id) => {
-    const img = $(id).querySelector("img");
-    if (img) URL.revokeObjectURL(img.src);
-  });
-
-  S.file = null;
+  S.files = [];
+  S.currentFileIndex = 0;
+  S.batchOrig = 0;
+  S.batchComp = 0;
 
   $("dropzone").classList.remove("loaded");
   show("empty-state");
@@ -286,7 +246,7 @@ function clearFile() {
    CONNECTION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function jumpToConnect() {
-  if (!S.file) {
+  if (S.files.length === 0) {
     $("dropzone").scrollIntoView({ behavior: "smooth", block: "center" });
     return;
   }
@@ -342,42 +302,35 @@ function onRoomFull() {
   toast("⛔", "Room full", "That code already has 2 people connected.");
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   EXIT MODAL
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function showExitModal() {
   $("exit-modal").style.display = "grid";
 }
-
 function closeExitModal() {
   $("exit-modal").style.display = "none";
 }
-
 function confirmExit() {
   closeExitModal();
   doReset();
 }
 
-function exitWarning(e) {
+window.addEventListener("beforeunload", (e) => {
   if (S.connected) {
     e.preventDefault();
     e.returnValue = "";
   }
-}
-
-window.addEventListener("beforeunload", exitWarning);
+});
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    UPDATE SEND SECTION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function updateSendSection() {
-  if (!S.file || !S.connected) return;
+  if (S.files.length === 0 || !S.connected) return;
 
-  const comp = Math.floor(S.file.size * S.ratio);
-  const saved = Math.round((1 - S.ratio) * 100);
+  const totalSize = S.files.reduce((acc, f) => acc + f.size, 0);
+  const title =
+    S.files.length > 1 ? `${S.files.length} files` : S.files[0].name;
 
-  $("send-file-desc").textContent =
-    `${S.file.name} · ${fmtBytes(S.file.size)} → ${fmtBytes(comp)} (−${saved}%)`;
+  $("send-file-desc").textContent = `${title} · ${fmtBytes(totalSize)} (Ready)`;
   $("send-peer-desc").textContent = `Peer ${S.peerCode} is ready to receive`;
 
   show("sec-send", "reveal");
@@ -385,22 +338,35 @@ function updateSendSection() {
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SEND
+   QUEUE SENDER LOOP
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-function doSend(btn) {
-  if (!S.file) return;
+function doSend() {
+  if (S.files.length === 0) return;
 
   hide("send-idle");
   show("send-active");
 
+  S.currentFileIndex = 0;
+  sendNextInQueue();
+}
+
+function sendNextInQueue() {
+  if (S.currentFileIndex >= S.files.length) {
+    onBatchComplete();
+    return;
+  }
+
+  const currentFile = S.files[S.currentFileIndex];
+
   $("prog-bar").style.width = "0%";
   $("prog-pct").textContent = "0%";
-  $("prog-sub").textContent = "Starting…";
+  $("prog-sub").textContent =
+    `Sending file ${S.currentFileIndex + 1} of ${S.files.length}: ${currentFile.name}`;
   $("speedo-val").textContent = "0.0 MB/s";
-  $("speedo-sub").textContent = "0 B of " + fmtBytes(S.file.size);
+  $("speedo-sub").textContent = "0 B of " + fmtBytes(currentFile.size);
   $("speedo-bar").style.width = "0%";
 
-  const ok = sendFileOverChannel(S.file);
+  const ok = sendFileOverChannel(currentFile);
   if (!ok) {
     show("send-idle");
     hide("send-active");
@@ -424,9 +390,25 @@ function doAbort() {
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   TRANSFER COMPLETE
+   TRANSFER COMPLETE (SINGLE FILE vs BATCH)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-function onTransferComplete(role = "sender") {
+// ✨ NEW: This now receives the byte math from webrtc.js!
+function onTransferComplete(role = "sender", origSize = 0, compSize = 0) {
+  if (role === "sender") {
+    console.log(`✅ File ${S.currentFileIndex + 1} complete.`);
+
+    // Add this file's stats to the total batch tally
+    S.batchOrig += origSize;
+    S.batchComp += compSize;
+
+    S.currentFileIndex++;
+    sendNextInQueue();
+  } else {
+    toast("📥", "File received!", "Saved successfully.");
+  }
+}
+
+function onBatchComplete() {
   hide("send-active");
   show("send-idle");
 
@@ -437,7 +419,7 @@ function onTransferComplete(role = "sender") {
   const sendBtn = $("send-btn");
   if (sendBtn) {
     sendBtn.disabled = true;
-    sendBtn.textContent = "✓ File sent";
+    sendBtn.textContent = "✓ Batch sent";
     sendBtn.style.background = "linear-gradient(135deg, #22C55E, #16A34A)";
     sendBtn.style.boxShadow = "0 6px 20px rgba(34,197,94,0.32)";
   }
@@ -445,22 +427,22 @@ function onTransferComplete(role = "sender") {
   const el = $("sec-success");
   el.style.display = "block";
 
-  if (role === "sender") {
-    document.querySelector(".success-title").textContent = "Delivered!";
-    document.querySelector(".success-emoji").textContent = "🎉";
-    $("success-sub").textContent = S.file
-      ? `"${S.file.name}" delivered — ${fmtBytes(S.file.size)} sent.`
-      : "File delivered successfully.";
-    toast("🎉", "Delivered!", "File sent successfully.");
+  document.querySelector(".success-title").textContent = "Delivered!";
+  document.querySelector(".success-emoji").textContent = "🎉";
+  $("success-sub").textContent =
+    `All ${S.files.length} files delivered successfully.`;
+
+  // ✨ CALCULATE AND SHOW THE SAVINGS MATH ✨
+  const savedBytes = S.batchOrig - S.batchComp;
+  if (savedBytes > 0) {
+    $("success-saved").textContent =
+      `🌱 Smart Engine saved ${fmtBytes(savedBytes)} of bandwidth!`;
+    $("success-saved").style.display = "block";
   } else {
-    document.querySelector(".success-title").textContent = "Received!";
-    document.querySelector(".success-emoji").textContent = "📥";
-    $("success-sub").textContent = incomingMeta
-      ? `"${incomingMeta.name}" received — ${fmtBytes(incomingMeta.size)} saved to your device.`
-      : "File received successfully.";
-    toast("📥", "Received!", "File saved to your device.");
+    $("success-saved").style.display = "none";
   }
 
+  toast("🎉", "Delivered!", "Entire batch sent.");
   launchConfetti();
 }
 
@@ -513,9 +495,9 @@ function doReset() {
 
     $("connDot").className = "conn-dot";
     $("connText").textContent = "Not connected";
-
     $("peer-input").value = "";
     $("peer-input").disabled = false;
+
     const btn = $("connect-btn");
     btn.textContent = "Connect with friend →";
     btn.style.background = "";
@@ -534,7 +516,7 @@ function doReset() {
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SVG BRIDGE ANIMATION
+   SVG BRIDGE & CONFETTI ANIMATIONS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function activateBridge() {
   $("bt-line").classList.add("drawn");
@@ -570,9 +552,6 @@ function activateBridge() {
   });
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   COPY CODE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function copyCode() {
   const code = $("my-code").textContent;
   navigator.clipboard.writeText(code).catch(() => {});
@@ -585,9 +564,6 @@ function copyCode() {
   }, 2200);
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   CONFETTI
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function launchConfetti() {
   const canvas = $("fx");
   const ctx = canvas.getContext("2d");
@@ -639,9 +615,6 @@ function launchConfetti() {
   draw();
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   INIT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 document.addEventListener("DOMContentLoaded", () => {
   $("my-code").textContent = wordCode();
   show("sec-connect");
