@@ -1,6 +1,4 @@
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   STATE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// Global execution state
 const S = {
   files: [],
   currentFileIndex: 0,
@@ -8,14 +6,11 @@ const S = {
   peerCode: null,
   firstFile: true,
   peak: 0,
-  sendTimer: null,
-  batchOrig: 0, // ✨ NEW: Tracks total original bytes across all files
-  batchComp: 0, // ✨ NEW: Tracks total compressed network bytes across all files
+  batchOrig: 0,
+  batchComp: 0,
 };
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   DOM HELPERS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// DOM HELPERS
 const $ = (id) => document.getElementById(id);
 
 const show = (id, animClass = "") => {
@@ -32,9 +27,7 @@ const hide = (id) => {
   $(id).style.display = "none";
 };
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   UTILITY FUNCTIONS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// UTILITY FUNCTIONS
 function fmtBytes(b) {
   if (!b || b === 0) return "0 B";
   const k = 1024;
@@ -87,9 +80,7 @@ function wordCode() {
   );
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   TOAST NOTIFICATION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// TOAST NOTIFICATION
 function toast(icon, title, sub = "") {
   $("toast-icon").textContent = icon;
   $("toast-title").textContent = title;
@@ -100,9 +91,7 @@ function toast(icon, title, sub = "") {
   t._timer = setTimeout(() => t.classList.remove("show"), 3500);
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   STEPPER
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// STEPPER
 function setStep(n) {
   for (let i = 1; i <= 3; i++) {
     const el = $("s" + i);
@@ -116,9 +105,7 @@ function setStep(n) {
     "step-connector" + (n > 2 ? " done" : n === 2 ? " active" : "");
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   DRAG & DROP HANDLERS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// DRAG AND DROP HANDLERS
 function onDragOver(e) {
   e.preventDefault();
   if (S.files.length === 0) $("dropzone").classList.add("drag-over");
@@ -134,10 +121,6 @@ function onDrop(e) {
   if (e.dataTransfer.files.length > 0) processFiles(e.dataTransfer.files);
 }
 
-function onDropzoneClick() {
-  $("file-input").click();
-}
-
 function onFileSelect(e) {
   if (e.target.files.length > 0) {
     processFiles(e.target.files);
@@ -145,9 +128,7 @@ function onFileSelect(e) {
   }
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   PROCESS MULTIPLE FILES (APPEND MODE)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// BATCH PROCESSING
 function processFiles(fileList) {
   $("sec-success").style.display = "none";
   hide("send-active");
@@ -161,12 +142,10 @@ function processFiles(fileList) {
     sendBtn.style.boxShadow = "";
   }
 
-  // Append new files
   const newFiles = Array.from(fileList);
   S.files = [...S.files, ...newFiles];
   S.currentFileIndex = 0;
 
-  // Reset the global counters for the new batch
   S.batchOrig = 0;
   S.batchComp = 0;
 
@@ -193,11 +172,11 @@ function processFiles(fileList) {
 
   $("file-chips").innerHTML = `
     <span class="chip chip-teal">✓ Loaded</span>
-    <span class="chip chip-green">Smart Engine⚡</span>
+    <span class="chip chip-green">Smart Engine ⚡</span>
   `;
 
   show("sec-compression");
-  $("c-pct").innerHTML = `<span style="font-size: 32px">Live⚡</span>`;
+  $("c-pct").innerHTML = `<span style="font-size: 32px">Live ⚡</span>`;
   $("c-detail").innerHTML =
     `<strong>${fmtBytes(totalSize)}</strong> will be processed dynamically.<br>Smart filter active.`;
 
@@ -214,7 +193,6 @@ function processFiles(fileList) {
   }
 
   if (S.connected) updateSendSection();
-
   toast(
     "📂",
     "Files added",
@@ -242,9 +220,7 @@ function clearFile() {
   setStep(1);
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   CONNECTION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// CONNECTION DOM BINDINGS
 function jumpToConnect() {
   if (S.files.length === 0) {
     $("dropzone").scrollIntoView({ behavior: "smooth", block: "center" });
@@ -255,12 +231,8 @@ function jumpToConnect() {
 }
 
 function joinRoom(code) {
-  // BUG FIX: myRoom is declared in webrtc.js. Assigning here would create a
-  // local shadow variable. Instead, set it directly on the window scope so
-  // both files share the same reference.
   window.myRoom = code;
   socket.emit("join-room", code);
-  console.log("Joining room:", code);
 }
 
 function doConnect() {
@@ -286,13 +258,31 @@ function doConnect() {
 
 function onPeerConnected() {
   const btn = $("connect-btn");
-  btn.textContent = "✓ Connected";
-  btn.style.background = "linear-gradient(135deg, #22C55E, #16A34A)";
-  btn.style.boxShadow = "0 6px 20px rgba(34,197,94,0.32)";
-  btn.disabled = false;
 
-  $("code-display").classList.add("pulse-glow");
-  setTimeout(() => $("code-display").classList.remove("pulse-glow"), 2000);
+  // LOCK ROOM FEATURE: Scrapes the QR Code and Share Code from the DOM
+  // to ensure total privacy once the secure P2P tunnel is established.
+  $("code-display").style.display = "none";
+  $("or-sep").style.display = "none";
+  $("peer-input").parentElement.style.display = "none";
+  btn.style.display = "none";
+
+  let lockMsg = $("locked-msg");
+  if (!lockMsg) {
+    lockMsg = document.createElement("div");
+    lockMsg.id = "locked-msg";
+    lockMsg.style.textAlign = "center";
+    lockMsg.style.padding = "20px";
+    lockMsg.style.color = "#15803d";
+    lockMsg.style.fontWeight = "600";
+    lockMsg.style.background = "rgba(34, 197, 94, 0.1)";
+    lockMsg.style.borderRadius = "12px";
+    lockMsg.style.marginTop = "10px";
+    lockMsg.style.marginBottom = "10px";
+    lockMsg.innerHTML = "🔒 Room Locked. Connection is private.";
+    $("code-display").parentElement.insertBefore(lockMsg, $("bridge"));
+  }
+
+  if (S.files.length > 0) updateSendSection();
 }
 
 function onRoomFull() {
@@ -311,9 +301,10 @@ function showExitModal() {
 function closeExitModal() {
   $("exit-modal").style.display = "none";
 }
+
+// HARD DISCONNECT: Refresh the page for a secure state wipe
 function confirmExit() {
-  closeExitModal();
-  doReset();
+  window.location.reload();
 }
 
 window.addEventListener("beforeunload", (e) => {
@@ -323,9 +314,6 @@ window.addEventListener("beforeunload", (e) => {
   }
 });
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   UPDATE SEND SECTION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function updateSendSection() {
   if (S.files.length === 0 || !S.connected) return;
 
@@ -334,15 +322,16 @@ function updateSendSection() {
     S.files.length > 1 ? `${S.files.length} files` : S.files[0].name;
 
   $("send-file-desc").textContent = `${title} · ${fmtBytes(totalSize)} (Ready)`;
-  $("send-peer-desc").textContent = `Peer ${S.peerCode} is ready to receive`;
+
+  // Solves the "Peer Null" aesthetic bug if a connection is established passively
+  const peerName = S.peerCode ? `Peer ${S.peerCode}` : "Peer";
+  $("send-peer-desc").textContent = `${peerName} is ready to receive`;
 
   show("sec-send", "reveal");
   setStep(3);
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   QUEUE SENDER LOOP
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// BATCH SENDING LOGIC
 function doSend() {
   if (S.files.length === 0) return;
 
@@ -376,42 +365,60 @@ function sendNextInQueue() {
   }
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   ABORT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-function doAbort() {
-  if (S.sendTimer) {
-    clearInterval(S.sendTimer);
-    S.sendTimer = null;
-  }
-  hide("send-active");
-  show("send-idle");
+// SOFT RESET: Clears queue and prepares UI for a fresh drop without breaking the WebRTC connection
+window.prepareNextTransfer = function () {
+  clearFile();
+
+  $("sec-success").style.display = "none";
   $("prog-bar").style.width = "0%";
   $("prog-pct").textContent = "0%";
   $("speedo-bar").style.width = "0%";
-  toast("⛔", "Transfer stopped", "You can try again.");
+  $("peak-spd").textContent = "0";
+
+  const sendBtn = $("send-btn");
+  if (sendBtn) {
+    sendBtn.disabled = false;
+    sendBtn.textContent = "Send this file →";
+    sendBtn.style.background = "";
+    sendBtn.style.boxShadow = "";
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+// REMOTE ABORT LISTENER: Clears queue and returns user to Step 1 safely
+window.onRemoteAbort = function () {
+  window.prepareNextTransfer();
+  toast("⛔", "Cancelled", "The other person stopped the transfer.");
+};
+
+// TWO-SIDED ABORT: Sends the network interrupt signal defined in webrtc.js
+function doAbort() {
+  if (typeof window.notifyAbort === "function") window.notifyAbort();
+
+  // Safely delay the local UI wipe so the abort packet has time to exit the network interface
+  setTimeout(() => {
+    window.prepareNextTransfer();
+    toast("⛔", "Stopped", "You cancelled the transfer.");
+  }, 100);
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   TRANSFER COMPLETE (SINGLE FILE vs BATCH)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-// ✨ NEW: This now receives the byte math from webrtc.js!
 function onTransferComplete(role = "sender", origSize = 0, compSize = 0) {
   if (role === "sender") {
-    console.log(`✅ File ${S.currentFileIndex + 1} complete.`);
-
-    // Add this file's stats to the total batch tally
     S.batchOrig += origSize;
     S.batchComp += compSize;
-
     S.currentFileIndex++;
     sendNextInQueue();
   } else {
-    toast("📥", "File received!", "Saved successfully.");
+    // UI Wait State: Pauses the receiver screen until the sender's final telemetry packet arrives
+    $("prog-sub").textContent = "Waiting for next file…";
+    $("prog-bar").style.width = "100%";
+    $("prog-pct").textContent = "100%";
   }
 }
 
-function onBatchComplete() {
+// SYNCED DATA SAVED SCREEN: Renders identically across both active devices
+window.showSuccessScreen = function (orig, comp, count, role) {
   hide("send-active");
   show("send-idle");
 
@@ -430,97 +437,60 @@ function onBatchComplete() {
   const el = $("sec-success");
   el.style.display = "block";
 
-  document.querySelector(".success-title").textContent = "Delivered!";
-  document.querySelector(".success-emoji").textContent = "🎉";
-  $("success-sub").textContent =
-    `All ${S.files.length} files delivered successfully.`;
-
-  // ✨ CALCULATE AND SHOW THE SAVINGS MATH ✨
-  const savedBytes = S.batchOrig - S.batchComp;
-  if (savedBytes > 0) {
-    $("success-saved").textContent =
-      `🌱 Smart Engine saved ${fmtBytes(savedBytes)} of bandwidth!`;
-    $("success-saved").style.display = "block";
+  // Dynamic context generation
+  if (role === "sender") {
+    document.querySelector(".success-title").textContent = "Delivered!";
+    document.querySelector(".success-emoji").textContent = "🎉";
+    if (count > 1) {
+      $("success-sub").textContent =
+        `All ${count} files delivered successfully.`;
+    } else {
+      $("success-sub").textContent = "File delivered successfully.";
+    }
+    toast("🎉", "Delivered!", "Transfer complete.");
   } else {
-    $("success-saved").style.display = "none";
+    document.querySelector(".success-title").textContent = "Received!";
+    document.querySelector(".success-emoji").textContent = "📥";
+    if (count > 1) {
+      $("success-sub").textContent = `All ${count} files saved safely.`;
+    } else {
+      $("success-sub").textContent = "File saved safely.";
+    }
+    toast("📥", "Received!", "Transfer complete.");
   }
 
-  toast("🎉", "Delivered!", "Entire batch sent.");
+  // ACCURATE DATA SAVED COMPUTATION
+  const savedBytes = orig - comp;
+  const savedText = savedBytes > 0 ? fmtBytes(savedBytes) : "0 B";
+  $("success-saved").textContent =
+    `🌱 Smart Engine saved ${savedText} of bandwidth!`;
+  $("success-saved").style.display = "block";
+
   launchConfetti();
+};
+
+function onBatchComplete() {
+  // Transmit final compression metrics to the receiving peer so their success screen matches
+  if (
+    typeof dataChannel !== "undefined" &&
+    dataChannel &&
+    dataChannel.readyState === "open"
+  ) {
+    dataChannel.send(
+      JSON.stringify({
+        type: "batch-done",
+        orig: S.batchOrig,
+        comp: S.batchComp,
+        count: S.files.length,
+      }),
+    );
+  }
+
+  // Render sender success screen
+  window.showSuccessScreen(S.batchOrig, S.batchComp, S.files.length, "sender");
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   RESET
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
-function doReset() {
-  const wasConnected = S.connected;
-  clearFile();
-
-  if (S.sendTimer) {
-    clearInterval(S.sendTimer);
-    S.sendTimer = null;
-  }
-  S.peak = 0;
-
-  $("sec-success").style.display = "none";
-  hide("send-active");
-  show("send-idle");
-  $("prog-bar").style.width = "0%";
-  $("prog-pct").textContent = "0%";
-  $("speedo-bar").style.width = "0%";
-  $("peak-spd").textContent = "0";
-
-  const sendBtn = $("send-btn");
-  if (sendBtn) {
-    sendBtn.disabled = false;
-    sendBtn.textContent = "Send this file →";
-    sendBtn.style.background = "";
-    sendBtn.style.boxShadow = "";
-  }
-
-  if (wasConnected) {
-    show("sec-connect");
-    hide("sec-how");
-    hide("sec-send");
-    setStep(2);
-  } else {
-    S.connected = false;
-    S.peerCode = null;
-
-    if (typeof pc !== "undefined" && pc) {
-      pc.close();
-      pc = null;
-    }
-    if (typeof dataChannel !== "undefined" && dataChannel) {
-      dataChannel.close();
-      dataChannel = null;
-    }
-
-    $("connDot").className = "conn-dot";
-    $("connText").textContent = "Not connected";
-    $("peer-input").value = "";
-    $("peer-input").disabled = false;
-
-    const btn = $("connect-btn");
-    btn.textContent = "Connect with friend →";
-    btn.style.background = "";
-    btn.style.boxShadow = "";
-    btn.disabled = false;
-
-    $("bridge").classList.remove("visible");
-    $("or-sep").style.display = "";
-    $("bt-line").classList.remove("drawn");
-    $("bn-friend").classList.remove("lit");
-    $("bridge-caption").textContent = "Establishing link…";
-    $("bridge-caption").className = "bridge-caption";
-
-    $("my-code").textContent = wordCode();
-  }
-}
-
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SVG BRIDGE & CONFETTI ANIMATIONS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+// SVG BRIDGE AND CONFETTI ANIMATIONS
 function activateBridge() {
   $("bt-line").classList.add("drawn");
   $("bn-friend").classList.add("lit");
@@ -618,8 +588,47 @@ function launchConfetti() {
   draw();
 }
 
+// DYNAMIC QR CODE ENGINE
+let qrInstance = null;
+
+function updateQRCode(code) {
+  // HARDCODED IP: Guarantees mobile devices can connect to the host machine immediately
+  const scanUrl = "http://10.104.223.5:3000/?room=" + code;
+
+  if (!qrInstance) {
+    qrInstance = new QRCode($("qrcode"), {
+      text: scanUrl,
+      width: 70,
+      height: 70,
+      colorDark: "#18181b",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.L,
+    });
+  } else {
+    qrInstance.clear();
+    qrInstance.makeCode(scanUrl);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  $("my-code").textContent = wordCode();
+  // Always generate this device's unique room code and QR immediately
+  const initialCode = wordCode();
+  $("my-code").textContent = initialCode;
+  updateQRCode(initialCode);
+
+  // Application routing evaluation: Scrape browser URL to identify if session was initiated via camera scan
+  const params = new URLSearchParams(window.location.search);
+  const scannedRoom = params.get("room");
+
+  if (scannedRoom) {
+    $("peer-input").value = scannedRoom;
+    window.history.replaceState({}, document.title, window.location.pathname);
+    setTimeout(() => {
+      jumpToConnect();
+      doConnect();
+    }, 500);
+  }
+
   show("sec-connect");
   hide("sec-how");
 });

@@ -48,7 +48,7 @@
   --step-dur: 0.55s;
 }
 
-/* ── Dark Mode ── */
+/* Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
     --warm-white: #0c1210;
@@ -72,9 +72,6 @@
   }
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   RESET
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 *,
 *::before,
 *::after {
@@ -109,9 +106,7 @@ input {
   font-family: inherit;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   ANIMATED MESH BACKGROUND
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* ANIMATED MESH BACKGROUND */
 .mesh-bg {
   position: fixed;
   inset: 0;
@@ -175,9 +170,7 @@ input {
   }
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   LAYOUT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* LAYOUT */
 .app {
   position: relative;
   z-index: 1;
@@ -187,9 +180,7 @@ input {
   min-height: 100vh;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   HEADER
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* HEADER */
 .header {
   padding: 22px 0 18px;
   display: flex;
@@ -248,7 +239,6 @@ input {
   letter-spacing: 0.3px;
 }
 
-/* ── Connection badge ── */
 .conn-badge {
   display: inline-flex;
   align-items: center;
@@ -299,9 +289,7 @@ input {
   animation: scale-pulse 0.85s ease infinite;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   STEP INDICATOR
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* STEP INDICATOR */
 .stepper {
   display: flex;
   align-items: center;
@@ -403,9 +391,7 @@ input {
   box-shadow: 0 0 6px var(--teal-glow-strong);
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   GLASS CARD
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* GLASS CARD */
 .card {
   background: var(--glass-bg);
   backdrop-filter: blur(18px);
@@ -427,9 +413,7 @@ input {
   padding: 22px;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SECTION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* SECTION */
 .section {
   margin-bottom: 14px;
 }
@@ -448,9 +432,7 @@ input {
   animation: reveal-in var(--step-dur) var(--spring) both;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   DROP ZONE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* DROP ZONE */
 .drop-zone {
   background: linear-gradient(
     160deg,
@@ -565,7 +547,6 @@ input {
   margin-right: auto;
 }
 
-/* File preview row */
 .file-row {
   display: none;
   align-items: center;
@@ -645,9 +626,7 @@ input {
   }
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   COMPRESSION BANNER
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* COMPRESSION BANNER */
 .compression-banner {
   background: linear-gradient(
     135deg,
@@ -739,9 +718,7 @@ input {
   color: var(--ink-dim);
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   CONNECT CARD
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+/* CONNECT CARD */
 .code-label {
   display: flex;
   align-items: center;
@@ -753,18 +730,16 @@ input {
   margin-bottom: 7px;
 }
 
+/* Connection Box Layout (Side-by-Side Flex Restored) */
 .code-display {
-  background: var(--cream);
-  border-radius: var(--r-md);
-  padding: 15px 17px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  align-items: center;
+  background: var(--glass-bg);
+  padding: 16px 20px;
+  border-radius: var(--r-md);
   border: 1.5px solid var(--border);
   transition: all 0.35s var(--ease);
-  position: relative;
-  overflow: hidden;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -786,7 +761,6 @@ input {
   font-weight: 700;
   letter-spacing: 3.5px;
   color: var(--ink);
-  transition: color 0.3s;
   position: relative;
   z-index: 1;
 }
@@ -803,8 +777,6 @@ input {
   transition: all 0.18s var(--spring);
   white-space: nowrap;
   flex-shrink: 0;
-  position: relative;
-  z-index: 1;
 }
 
 .copy-btn:hover {
@@ -824,7 +796,41 @@ input {
   border-color: #bbf7d0;
 }
 
-/* ── Visual Bridge ── */
+/* Inline Compact High-Res QR Code Styling */
+.qr-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-left: 20px;
+  border-left: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.qr-code {
+  width: 64px;
+  height: 64px;
+  background: white;
+  padding: 4px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.qr-code img,
+.qr-code canvas {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.qr-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+}
+
 .bridge {
   display: none;
   margin: 18px 0;
@@ -954,7 +960,6 @@ input {
   animation: fade-in 0.4s var(--ease);
 }
 
-/* ── Divider ── */
 .or-sep {
   display: flex;
   align-items: center;
@@ -972,7 +977,6 @@ input {
   background: var(--border);
 }
 
-/* ── Input ── */
 .field-wrap {
   margin-bottom: 14px;
 }
@@ -1019,7 +1023,6 @@ input {
   line-height: 1.5;
 }
 
-/* ── Tooltip ── */
 .tip-wrap {
   position: relative;
   display: inline-flex;
@@ -1080,7 +1083,6 @@ input {
   display: block;
 }
 
-/* ── Privacy bar ── */
 .privacy-bar {
   display: flex;
   align-items: center;
@@ -1100,7 +1102,6 @@ input {
   }
 }
 
-/* Privacy bar specific tooltip overrides to prevent edge cut-off */
 .privacy-bar .tip-box {
   left: auto;
   right: -10px;
@@ -1113,9 +1114,6 @@ input {
   transform: none;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SEND CARD
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .feat-row {
   display: flex;
   gap: 12px;
@@ -1152,7 +1150,6 @@ input {
   line-height: 1.5;
 }
 
-/* ── Progress bar ── */
 .prog-header {
   display: flex;
   justify-content: space-between;
@@ -1203,7 +1200,6 @@ input {
   margin-top: 8px;
 }
 
-/* ── Speedometer ── */
 .speedo {
   display: flex;
   align-items: center;
@@ -1269,9 +1265,6 @@ input {
   color: var(--ink-dim);
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   BUTTONS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -1370,9 +1363,6 @@ input {
   box-shadow: none !important;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   SUCCESS STATE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .success {
   display: none;
   text-align: center;
@@ -1464,9 +1454,6 @@ input {
   }
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   TOAST
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .toast {
   position: fixed;
   bottom: 24px;
@@ -1497,16 +1484,10 @@ input {
   font-size: 20px;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   HOW IT WORKS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .how-body {
   padding: 18px 22px;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   COACH MARK
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .coach {
   display: none;
   background: #1a2e28;
@@ -1546,9 +1527,6 @@ input {
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   CONFETTI CANVAS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 #fx {
   position: fixed;
   inset: 0;
@@ -1556,9 +1534,6 @@ input {
   z-index: 9999;
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   EXIT MODAL
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1637,9 +1612,6 @@ input {
   transform: scale(0.94);
 }
 
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   KEYFRAMES
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 @keyframes fade-up {
   from {
     opacity: 0;
@@ -1825,4 +1797,75 @@ input {
   to {
     transform: translate(-40px, 35px) scale(1.15);
   }
+}
+
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s var(--ease);
+}
+
+.github-link:hover {
+  background: var(--cream);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.github-link:active {
+  transform: scale(0.96);
+}
+
+@media (max-width: 400px) {
+  .gh-text {
+    display: none;
+  }
+  .github-link {
+    padding: 7px 10px;
+  }
+}
+
+.qr-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-left: 20px;
+  border-left: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.qr-code {
+  width: 64px;
+  height: 64px;
+  background: white;
+  padding: 4px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.qr-code img,
+.qr-code canvas {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.qr-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
 }
