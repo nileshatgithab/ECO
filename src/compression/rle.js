@@ -1,49 +1,55 @@
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   RUN-LENGTH ENCODER (RLE)
-   Pre-processes data by squishing repeating bytes 
-   into [Count, Value] pairs before Huffman coding.
+   RUN-LENGTH ENCODER
+   Role: Pre-processes streams by collapsing repeating sequential bytes
+   (e.g., compressing large blocks of blank space in a bitmap).
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
 class RLEncoder {
-  // ── SQUISH REPEATING BYTES ──
   static encode(uint8Array) {
     if (!uint8Array || uint8Array.length === 0) return new Uint8Array(0);
 
-    const encoded = [];
+    // PRE-ALLOCATION OPTIMIZATION: Maxing out initial memory prevents the JavaScript Engine's
+    // Garbage Collector from frequently halting execution to dynamically resize the array.
+    const encoded = new Uint8Array(uint8Array.length * 2);
+    let outIdx = 0;
     let count = 1;
     let currentByte = uint8Array[0];
 
     for (let i = 1; i < uint8Array.length; i++) {
-      // If the byte repeats, and we haven't hit the 1-byte max limit of 255
+      // Counter peaks at 255 to fit within a standard 8-bit unsigned integer limitation
       if (uint8Array[i] === currentByte && count < 255) {
         count++;
       } else {
-        // Run ended: push the Count, then the Byte
-        encoded.push(count, currentByte);
+        // Run ended. Save count and value sequence
+        encoded[outIdx++] = count;
+        encoded[outIdx++] = currentByte;
         currentByte = uint8Array[i];
         count = 1;
       }
     }
-    // Push the final run
-    encoded.push(count, currentByte);
+    encoded[outIdx++] = count;
+    encoded[outIdx++] = currentByte;
 
-    return new Uint8Array(encoded);
+    // Discard unused memory bounds before network transport
+    return encoded.slice(0, outIdx);
   }
 
-  // ── EXPAND BACK TO ORIGINAL ──
   static decode(encodedArray) {
     if (!encodedArray || encodedArray.length === 0) return new Uint8Array(0);
 
-    const decoded = [];
-    // Read in pairs of two: [Count, Byte]
+    // Exact memory prediction to prevent array resizing overhead on the receiver
+    let totalLen = 0;
+    for (let i = 0; i < encodedArray.length; i += 2)
+      totalLen += encodedArray[i];
+
+    const decoded = new Uint8Array(totalLen);
+    let outIdx = 0;
+
     for (let i = 0; i < encodedArray.length; i += 2) {
       const count = encodedArray[i];
       const byte = encodedArray[i + 1];
-
-      // Reconstruct the original repeating pattern
-      for (let j = 0; j < count; j++) {
-        decoded.push(byte);
-      }
+      for (let j = 0; j < count; j++) decoded[outIdx++] = byte;
     }
-    return new Uint8Array(decoded);
+    return decoded;
   }
 }
